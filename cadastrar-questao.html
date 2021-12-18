@@ -36,15 +36,26 @@
 		
 		<br /><br />
 
-		<section class="container center-container">
-            <section class="section_content">
-                    <p><b>Login</b></p>
+		<section class="container-questao center-container">
+            <section class="section-content-questao">
+                    <p><b>Cadastrar questão</b></p>
                     <form method="POST">
-                        <p class="login-center"><b>E-mail</b></p>
-                        <input type="text" class="login-center input-width" name="email" required>
-        
-                        <p class="login-center"><b>Senha</b></p>
-                        <input type="password" class="login-center input-width" name="senha" required>
+                        <p class="login-center"><b>Enunciado</b></p>
+                        <textarea class="login-center input-width materialize-textarea" name="textarea1" required></textarea>
+                        
+                        <p class="login-center"><b>Alternativas</b></p>
+                        <input type="text" class="login-center input-width" name="alternativa1" id="alternativa1" placeholder="Alternativa 1" required>
+                        <br /><br />
+                        <input type="text" class="login-center input-width" name="alternativa2" id="alternativa2" placeholder="Alternativa 2" required>
+                        <br /><br />
+                        <input type="text" class="login-center input-width" name="alternativa3" id="alternativa3" placeholder="Alternativa 3" required>
+                        <br /><br />
+                        <input type="text" class="login-center input-width" name="alternativa4" id="alternativa4" placeholder="Alternativa 4" required>
+                        <br /><br />
+                        <input type="text" class="login-center input-width" name="alternativa5" id="alternativa5" placeholder="Alternativa 5" required>
+
+                        <p class="login-center"><b>Resposta</b></p>
+                        <input type="text" class="login-center input-width" name="resposta" required>
 
                         <br /> <br />
 

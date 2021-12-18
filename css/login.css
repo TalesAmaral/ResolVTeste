@@ -29,4 +29,16 @@
 
 .center-container{
     padding-top: 120px;
+    padding-bottom: 10%;
+}
+
+.container-questao{
+    width: 150%;
+    padding-left:20%;
+    padding-bottom: 10%
+  }
+
+.section-content-questao{
+    width: 50%;
+    background: #fafafa ;
 }
