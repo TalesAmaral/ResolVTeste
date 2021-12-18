@@ -1,0 +1,35 @@
+html, body{
+    margin: 1px;
+    padding: 1px;
+    font-family: "Helvetica", sans-serif;
+    font-size: 14pt;
+}
+    
+.body_content{
+    height: 800px;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background:#e0e0e0;
+}
+
+.section_content{
+    margin: auto;
+    width: 50%;
+    background: #fafafa ;
+    padding: 10px;
+}
+
+
+.button-width {
+    width: 10%;
+}
+
+.login-center{
+    margin-left: 20%;
+}
+
+.input-width {
+    width:50%;
+}
