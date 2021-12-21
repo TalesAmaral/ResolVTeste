@@ -72,21 +72,22 @@
 			<br />
 			
 			<form action="POST">
-			
 			<?php
-			$sql = "SELECT Valor FROM alternativa 
-			INNER JOIN possui ON alternativa.ID_Alternativa = possui.fk_Alternativa_ID_Alternativa INNER JOIN questao ON questao.ID_Questao = possui.fk_Questao_ID_Questao
-			WHERE questao.ID_Questao = $idQuestao
-			ORDER BY RAND()";
-			$result = $conn->query($sql);
-			if ($result->num_rows > 0) {
-				$valores = array();
-				while($row = $result->fetch_assoc()) {
-					$valores[] = $row["Valor"];
+			if($resultados){
+				$sql = "SELECT Valor FROM alternativa 
+				INNER JOIN possui ON alternativa.ID_Alternativa = possui.fk_Alternativa_ID_Alternativa INNER JOIN questao ON questao.ID_Questao = possui.fk_Questao_ID_Questao
+				WHERE questao.ID_Questao = $idQuestao
+				ORDER BY RAND()";
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+					$valores = array();
+					while($row = $result->fetch_assoc()) {
+						$valores[] = $row["Valor"];
+					}
+					$resultados=True;
+				} else {
+					$resultados=False;
 				}
-				$resultados=True;
-			} else {
-				$resultados=False;
 			}
 			$conn->close();
 			?>
@@ -96,31 +97,31 @@
 			<p>
 			<label>
 				<input name="group1" type="radio" />
-				<span><?php echo $valores[0] ?></span>
+				<span><?php if($resultados){echo $valores[0];} ?></span>
 			</label>
 			</p>
 			<p>
 			<label>
 				<input name="group1" type="radio" />
-				<span><?php echo $valores[1] ?></span>
+				<span><?php if($resultados){ echo $valores[1];} ?></span>
 			</label>
 			</p>
 			<p>
 			<label>
 				<input class="group1" name="group1" type="radio"  />
-				<span><?php echo $valores[2] ?></span>
+				<span><?php if($resultados){echo $valores[2];} ?></span>
 			</label>
 			</p>
 			<p>
 			<label>
 				<input name="group1" type="radio" />
-				<span><?php echo $valores[3] ?></span>
+				<span><?php if($resultados){echo $valores[3];} ?></span>
 			</label>
 			</p>
 			<p>
 			<label>
 				<input name="group1" type="radio" />
-				<span><?php echo $valores[4] ?></span>
+				<span><?php if($resultados){echo $valores[4];} ?></span>
 			</label>
 			</p>
 		</form>
