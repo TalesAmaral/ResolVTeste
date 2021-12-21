@@ -3,14 +3,15 @@
   <html>
     <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>ResolV</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>ResolV</title>
 
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/login.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<!-- CSS  -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link href="css/login.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link href="css/form.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     </head>
 
     <body>
@@ -36,7 +37,7 @@
 		</nav>
 		<?php
 		$questao = $_GET['questao'];
-
+		$clicou = $_GET['clicou'];
 		$servername = "localhost";
 		$username = "root";
 		$password = "usbw";
@@ -71,7 +72,7 @@
 				?></b></p>
 			<br />
 			
-			<form action="POST">
+			<form method="POST" action="questao.php?questao=1&clicou=1">
 			<?php
 			if($resultados){
 				$sql = "SELECT Valor FROM alternativa 
@@ -90,40 +91,43 @@
 				}
 			}
 			$conn->close();
+
 			?>
 			
-
-
-			<p>
-			<label>
-				<input name="group1" type="radio" />
-				<span><?php if($resultados){echo $valores[0];} ?></span>
-			</label>
-			</p>
-			<p>
-			<label>
-				<input name="group1" type="radio" />
-				<span><?php if($resultados){ echo $valores[1];} ?></span>
-			</label>
-			</p>
-			<p>
-			<label>
-				<input class="group1" name="group1" type="radio"  />
-				<span><?php if($resultados){echo $valores[2];} ?></span>
-			</label>
-			</p>
-			<p>
-			<label>
-				<input name="group1" type="radio" />
-				<span><?php if($resultados){echo $valores[3];} ?></span>
-			</label>
-			</p>
-			<p>
-			<label>
-				<input name="group1" type="radio" />
-				<span><?php if($resultados){echo $valores[4];} ?></span>
-			</label>
-			</p>
+			<?php foreach ($valores as $valor) : ?>
+				<?php 
+					$conn = mysqli_connect($servername, $username, $password,$database); #conecta de novo ao banco de dados
+					mysqli_set_charset($conn,"utf8");
+					$sql = "SELECT Valor FROM alternativa
+					INNER JOIN possui ON alternativa.ID_Alternativa = possui.fk_Alternativa_ID_Alternativa INNER JOIN questao ON questao.ID_Questao = possui.fk_Questao_ID_Questao
+					WHERE ID_Alternativa = questao.fk_Alternativa_ID_Alternativa"; #pega a alternativa correta
+					$result = $conn->query($sql);
+					if ($result->num_rows > 0) {
+						while($row = $result->fetch_assoc()) {
+							$resposta = $row["Valor"];
+						}
+					}
+					if($clicou==1 && isset($_POST['alternativas'])){
+						if($valor==$resposta){
+							echo "<p class='acertou'>";
+						}else if($_POST['alternativas']==$valor && $valor!=$resposta){
+							echo "<p class='errou'>";
+						}
+					}
+					
+				?>
+				<label>
+				<input type="radio" name="alternativas" id="resposta_<?php echo $valor ?>" value="<?php echo $valor ?>" <?php
+				if($clicou==1 && isset($_POST['alternativas'])){
+					if($valor==$_POST['alternativas']){
+						echo "checked";
+					}
+				}
+				?> /><span><?php echo $valor; ?></span>
+				</label>
+				<p>
+    		<?php endforeach ?>
+			<button type="submit" class="btn waves-effect waves-light">Enviar</button>
 		</form>
 
 
