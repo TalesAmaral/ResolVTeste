@@ -34,41 +34,71 @@
 				<a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 			</div>
 		</nav>
-<?php
-$questao = $_GET['questao'];
+		<?php
+		$questao = $_GET['questao'];
 
-$servername = "localhost";
-$username = "root";
-$password = "usbw";
-$database = "baseresolv";
+		$servername = "localhost";
+		$username = "root";
+		$password = "usbw";
+		$database = "baseresolv";
 
-// Create connection
-$conn = mysqli_connect($servername, $username, $password,$database);
-mysqli_set_charset($conn,"utf8");
-$sql = "SELECT * FROM questao where fk_Disciplina_ID_Disciplina = $questao";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-	$tales = 1;
-	while($row = $result->fetch_assoc()) {
-		$enunciado = $row["Enunciado"];
-	}
-} else {
-	$tales=0;
-	echo "0 results";
-}
-$conn->close();
+		// Create connection
+		$conn = mysqli_connect($servername, $username, $password,$database);
+		mysqli_set_charset($conn,"utf8");
+		$sql = "SELECT * FROM questao where fk_Disciplina_ID_Disciplina = $questao ORDER BY RAND () LIMIT 1";
+		$result = $conn->query($sql);
+		if ($result->num_rows > 0) {
+			$resultados = True;
+			while($row = $result->fetch_assoc()) {
+				$enunciado = $row["Enunciado"];
+				$ano = $row["Ano"];
+			}
+		} else {
+			$resultados=False;
+		}
+		$conn->close();
 
-?>
+		?>
 
 	<section class="container center-container">
 	    <section class="section_content">
-	    <p><b><?php 
-if($tales==1){
-	echo $enunciado;
-}
+			<p><b><?php 
+				if($resultados==True){
+					echo $enunciado;
+				}else{
+					echo "Não foi possível achar nenhuma questão.";
+				}
+				?></b></p>
+			<br />
+			
+			<form action="POST">
+			<p>
+			<label>
+				<input name="group1" type="radio" checked />
+				<span>Red</span>
+			</label>
+			</p>
+			<p>
+			<label>
+				<input name="group1" type="radio" />
+				<span>Yellow</span>
+			</label>
+			</p>
+			<p>
+			<label>
+				<input class="group1" name="group1" type="radio"  />
+				<span>Green</span>
+			</label>
+			</p>
+			<p>
+			<label>
+				<input name="group1" type="radio" />
+				<span>Brown</span>
+			</label>
+			</p>
+		</form>
 
-?></b></p>
-						  <br />
+
 	    </section>
 	</section>
       <!--JavaScript at end of body for optimized loading-->
