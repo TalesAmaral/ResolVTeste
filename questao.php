@@ -48,15 +48,15 @@
 		$sql = "SELECT * FROM questao where fk_Disciplina_ID_Disciplina = $questao ORDER BY RAND () LIMIT 1";
 		$result = $conn->query($sql);
 		if ($result->num_rows > 0) {
-			$resultados = True;
 			while($row = $result->fetch_assoc()) {
 				$enunciado = $row["Enunciado"];
 				$ano = $row["Ano"];
+				$idQuestao = $row["ID_Questao"];
 			}
+			$resultados = True;
 		} else {
 			$resultados=False;
 		}
-		$conn->close();
 
 		?>
 
@@ -72,28 +72,55 @@
 			<br />
 			
 			<form action="POST">
+			
+			<?php
+			$sql = "SELECT Valor FROM alternativa 
+			INNER JOIN possui ON alternativa.ID_Alternativa = possui.fk_Alternativa_ID_Alternativa INNER JOIN questao ON questao.ID_Questao = possui.fk_Questao_ID_Questao
+			WHERE questao.ID_Questao = $idQuestao
+			ORDER BY RAND()";
+			$result = $conn->query($sql);
+			if ($result->num_rows > 0) {
+				$valores = array();
+				while($row = $result->fetch_assoc()) {
+					$valores[] = $row["Valor"];
+				}
+				$resultados=True;
+			} else {
+				$resultados=False;
+			}
+			$conn->close();
+			?>
+			
+
+
 			<p>
 			<label>
-				<input name="group1" type="radio" checked />
-				<span>Red</span>
+				<input name="group1" type="radio" />
+				<span><?php echo $valores[0] ?></span>
 			</label>
 			</p>
 			<p>
 			<label>
 				<input name="group1" type="radio" />
-				<span>Yellow</span>
+				<span><?php echo $valores[1] ?></span>
 			</label>
 			</p>
 			<p>
 			<label>
 				<input class="group1" name="group1" type="radio"  />
-				<span>Green</span>
+				<span><?php echo $valores[2] ?></span>
 			</label>
 			</p>
 			<p>
 			<label>
 				<input name="group1" type="radio" />
-				<span>Brown</span>
+				<span><?php echo $valores[3] ?></span>
+			</label>
+			</p>
+			<p>
+			<label>
+				<input name="group1" type="radio" />
+				<span><?php echo $valores[4] ?></span>
 			</label>
 			</p>
 		</form>
