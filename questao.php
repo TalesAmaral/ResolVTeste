@@ -50,35 +50,47 @@
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password,$database);
 		mysqli_set_charset($conn,"utf8");
-		$sql = "SELECT * FROM questao where fk_Disciplina_ID_Disciplina = $questao ORDER BY RAND () LIMIT 1";
-		$result = $conn->query($sql);
-		if ($result->num_rows > 0) {
-			while($row = $result->fetch_assoc()) {
-				$enunciado = $row["Enunciado"];
-				$ano = $row["Ano"];
-				$idQuestao = $row["ID_Questao"];
+		if($clicou==0){
+			$sql = "SELECT * FROM questao where fk_Disciplina_ID_Disciplina = $questao ORDER BY RAND () LIMIT 1";
+			$result = $conn->query($sql);
+			if ($result->num_rows > 0) {
+				while($row = $result->fetch_assoc()) {
+					$_SESSION['enunciado'] = $row["Enunciado"];
+					$_SESSION['ano'] = $row["Ano"];
+					$_SESSION['idQuestao'] = $row["ID_Questao"];
+				}
+				$resultados = True;
+			} else {
+				$resultados=False;
 			}
-			$resultados = True;
-		} else {
-			$resultados=False;
+		}else{
+			$idQuestao = $_SESSION['idQuestao'];
+			$resultados=True;
 		}
-
+		
 		?>
 
 	<section class="container center-container">
 	    <section class="section_content">
 			<p><b><?php 
 				if($resultados==True){
-					echo $enunciado;
+					echo $_SESSION['enunciado'];
 				}else{
 					echo "Não foi possível achar nenhuma questão.";
 				}
 				?></b></p>
 			<br />
 			
-			<form method="POST" action="questao.php?questao=1&clicou=1">
+			<form method="POST" action="<?php
+			if($clicou==0){
+				echo "questao.php?questao=1&clicou=1";
+			}else{
+				echo "questao.php?questao=1&clicou=0";
+			}
+			?>">
 			<?php
-			if($resultados && $clicou==0){
+			if($clicou==0 && $resultados){
+				$idQuestao = $_SESSION['idQuestao'];
 				$sql = "SELECT Valor FROM alternativa 
 				INNER JOIN possui ON alternativa.ID_Alternativa = possui.fk_Alternativa_ID_Alternativa INNER JOIN questao ON questao.ID_Questao = possui.fk_Questao_ID_Questao
 				WHERE questao.ID_Questao = $idQuestao
@@ -121,7 +133,7 @@
 							echo "<p class='errou'>";
 						}
 					}
-					
+					$conn->close();
 				?>
 				<label>
 				<input type="radio" name="alternativas" id="resposta_<?php echo $valor ?>" value="<?php echo $valor ?>" <?php
@@ -134,7 +146,31 @@
 				</label>
 				<p>
     		<?php endforeach ?>
-			<button type="submit" class="btn waves-effect waves-light">Enviar</button>
+			
+			<?php
+			if($clicou==1){
+				echo "<p><b>Resolução:</b></p><br />";
+				$conn = mysqli_connect($servername, $username, $password,$database); #conecta de novo ao banco de dados
+				mysqli_set_charset($conn,"utf8");
+				$sql = "SELECT Solucao FROM questao WHERE ID_Questao = $idQuestao"; #pega a alternativa correta
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+					while($row = $result->fetch_assoc()) {
+						$resolucao = $row["Solucao"];
+					}
+				}
+				echo $resolucao."<br /><br />";
+				$conn->close();
+			}
+			?>
+
+			<button type="submit" class="btn waves-effect waves-light"><?php 
+			if($clicou==0){
+				echo "Enviar";
+			}else{
+				echo "Próxima questão";
+			}
+			?></button>
 		</form>
 
 
