@@ -1,5 +1,9 @@
-
-  <!DOCTYPE html>
+<?php
+	session_start();
+?>
+  
+ 
+ <!DOCTYPE html>
   <html>
     <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -74,7 +78,7 @@
 			
 			<form method="POST" action="questao.php?questao=1&clicou=1">
 			<?php
-			if($resultados){
+			if($resultados && $clicou==0){
 				$sql = "SELECT Valor FROM alternativa 
 				INNER JOIN possui ON alternativa.ID_Alternativa = possui.fk_Alternativa_ID_Alternativa INNER JOIN questao ON questao.ID_Questao = possui.fk_Questao_ID_Questao
 				WHERE questao.ID_Questao = $idQuestao
@@ -85,10 +89,13 @@
 					while($row = $result->fetch_assoc()) {
 						$valores[] = $row["Valor"];
 					}
+					$_SESSION['alternativas'] = $valores;
 					$resultados=True;
 				} else {
 					$resultados=False;
 				}
+			}else{
+				$valores = $_SESSION['alternativas'];
 			}
 			$conn->close();
 
