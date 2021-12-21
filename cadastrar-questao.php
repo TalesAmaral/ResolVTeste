@@ -15,7 +15,7 @@
 		
 		<ul id="dropdown1" class="dropdown-content">
 		  <li><a href="materias.html">Fazer questões</a></li>
-		  <li><a href="cadastrar-questao.html">Cadastrar questões</a></li>
+		  <li><a href="cadastrar-questao.php">Cadastrar questões</a></li>
 		</ul>
 	  
 		<nav class="white" role="navigation">
@@ -66,7 +66,34 @@
                             <option value="5">Alternativa 5</option>
                         </select>
                         <br /> <br />
+						            <p class="login-center"><b>Disciplina</b></p>
+                        <select class="browser-default login-center input-width">
+                            <option value="-1" disabled selected>Escolha a disciplina</option>
+                            <?php 
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "usbw";
+                            $database = "baseresolv";
+                        
+                            // Create connection
+                            $conn = mysqli_connect($servername, $username, $password,$database);
+                            mysqli_set_charset($conn,"utf8");
+                            $sql = "SELECT Nome FROM disciplina;";
+                            $result = $conn->query($sql);
+                            if ($result->num_rows > 0) {
+                              $disciplina = array();
+                              while($row = $result->fetch_assoc()) {
+                                $disciplina[] = $row["Nome"];
+                              }
+                            }
 
+                            $i = 1;
+                            ?>
+                            <?php foreach ($disciplina as $nomeDisc) : ?>
+                            <option value="<?php echo $i; $i+=1;?>"><?php echo $nomeDisc ?></option>
+                            <?php endforeach ?>
+                        </select>
+                        <br /><br />
                         <button type="submit" class="login-center btn waves-effect waves-light">Entrar</button>
 
                         <br /><br />

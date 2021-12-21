@@ -17,7 +17,7 @@
     <body>
     <ul id="dropdown1" class="dropdown-content">
 			<li><a href="materias.html">Fazer questões</a></li>
-			<li><a href="cadastrar-questao.html">Cadastrar questões</a></li>
+			<li><a href="cadastrar-questao.php">Cadastrar questões</a></li>
 		</ul>
 
 		<nav class="white" role="navigation">
