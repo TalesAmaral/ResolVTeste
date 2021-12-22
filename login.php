@@ -71,11 +71,11 @@
 							// Create connection
 							$conn = mysqli_connect($servername, $username, $password,$database);
 							mysqli_set_charset($conn,"utf8");
-							$sql = "SELECT * FROM usuario WHERE Apelido='$apelido' AND Senha='$senha'";
+							$sql = "SELECT ID_Usuario FROM usuario WHERE Apelido='$apelido' AND Senha='$senha'";
 							$result = $conn->query($sql);
 							if ($result->num_rows == 1) {
 								$_SESSION['login']=True;
-								$_SESSION['apelido']=$apelido;
+								$_SESSION['idUsuarioSessao']=$result->fetch_assoc()['ID_Usuario'];
 								$host  = $_SERVER['HTTP_HOST'];
 								$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 								$extra = 'index.php';
@@ -84,6 +84,7 @@
 							}else{
 								echo "<span><label>Foram inseridos dados incorretos.</label></span>";
 							}
+							$conn->close();
 						}
 						?>
 						<br /><br />

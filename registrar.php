@@ -87,8 +87,7 @@ session_start()
 									while($row = $result->fetch_assoc()) {
 										$idUsuario=$row['ID_Usuario']+1;
 									}
-								}
-								else{
+								}else{
 									$idUsuario = 1;
 								}
 								$sql = "INSERT INTO usuario(Nome, Email, Apelido, Senha, ID_Usuario) VALUES ('$nome', '$email', '$apelido', '$senha', $idUsuario);";
