@@ -112,20 +112,26 @@
 
 			?>
 			
+			<?php 
+			if($_SESSION['resultados']){
+				$conn = mysqli_connect($servername, $username, $password,$database); #conecta de novo ao banco de dados
+				mysqli_set_charset($conn,"utf8");
+				$sql = "SELECT Valor FROM alternativa
+				INNER JOIN possui ON alternativa.ID_Alternativa = possui.fk_Alternativa_ID_Alternativa INNER JOIN questao ON questao.ID_Questao = possui.fk_Questao_ID_Questao
+				WHERE ID_Alternativa = questao.fk_Alternativa_ID_Alternativa AND questao.ID_questao = $questao"; #pega a alternativa correta
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+					while($row = $result->fetch_assoc()) {
+						$resposta = $row["Valor"];
+					}
+				}
+				$conn->close();
+			}
+			?>
+
 			<?php foreach ($valores as $valor) : ?>
 				<?php
 					if($_SESSION['resultados']){
-						$conn = mysqli_connect($servername, $username, $password,$database); #conecta de novo ao banco de dados
-						mysqli_set_charset($conn,"utf8");
-						$sql = "SELECT Valor FROM alternativa
-						INNER JOIN possui ON alternativa.ID_Alternativa = possui.fk_Alternativa_ID_Alternativa INNER JOIN questao ON questao.ID_Questao = possui.fk_Questao_ID_Questao
-						WHERE ID_Alternativa = questao.fk_Alternativa_ID_Alternativa"; #pega a alternativa correta
-						$result = $conn->query($sql);
-						if ($result->num_rows > 0) {
-							while($row = $result->fetch_assoc()) {
-								$resposta = $row["Valor"];
-							}
-						}
 						if($clicou==1 && isset($_POST['alternativas'])){
 							if($valor==$resposta){
 								echo "<p class='acertou'>";
@@ -133,7 +139,6 @@
 								echo "<p class='errou'>";
 							}
 						}
-						$conn->close();
 					}
 				?>
 				<label>
