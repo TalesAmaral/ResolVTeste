@@ -179,7 +179,7 @@ session_start()
 
                           }
 
-                        }else if($_SESSION['login']==False){
+                        }else if(isset($_SESSION['login'])==False){
                           echo "<span><label>Você precisa estar logado para registrar uma questão.</label></span>";
                         }else if(isset($_POST['enunciado'])){
                           echo "<span><label>Faltou preencher algum dado.</label></span>";
