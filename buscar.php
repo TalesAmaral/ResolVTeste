@@ -17,9 +17,9 @@
 	<body>
 
 		<?php include 'header.php';?>
-		<form class = "row">
+			<form class = "row">
 
-				<div class="input-field col s12">
+				<div class="input-field col s3">
 					<select multiple>
 						<option value="" disabled selected>Escolha as disciplinas</option>
 
@@ -33,24 +33,22 @@
 							$conn = mysqli_connect($servername, $username, $password,$database);
 							mysqli_set_charset($conn,"utf8");
 							$sql = "SELECT Nome FROM disciplina ORDER BY ID_Disciplina ASC;";
+							$i = 1;
 							$result = $conn->query($sql);
 							if ($result->num_rows > 0) {
-								$disciplina = array();
 								while($row = $result->fetch_assoc()) {
-									$disciplina[] = $row["Nome"];
+									echo "<option value=\"$i\"> {$row["Nome"]}</option>";
+									$i+=1;
 								}
 							}
 
-							$i = 1;
 						?>
-						<?php foreach ($disciplina as $nomeDisc) : ?>
-						<option value="<?php echo $i; $i+=1;?>"><?php echo $nomeDisc ?></option>
-						<?php endforeach ?>
+
 
 					</select>
 				</div>
 
-		</form>
+			</form>
 
 
 
