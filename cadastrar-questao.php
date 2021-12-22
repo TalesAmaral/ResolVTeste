@@ -96,23 +96,25 @@
 							$conn = mysqli_connect($servername, $username, $password,$database);
 							mysqli_set_charset($conn,"utf8");
 
-							$enunciado = $_POST['enunciado'];
+							$charProibidos = array("'",'"');
+
+							$enunciado = str_replace($charProibidos,"",$_POST['enunciado']);
 
 							$sql = "SELECT * FROM questao WHERE Enunciado='$enunciado'";
 							$result = $conn->query($sql);
 							if ($result->num_rows > 0){
 								echo "<span><label>A questão já existe.</label></span>";
 							}else{
-								$a1=$_POST['alternativa1'];
-								$a2=$_POST['alternativa2'];
-								$a3=$_POST['alternativa3'];
-								$a4=$_POST['alternativa4'];
-								$a5=$_POST['alternativa5'];
+								$a1=str_replace($charProibidos,"",$_POST['alternativa1']);
+								$a2=str_replace($charProibidos,"",$_POST['alternativa2']);
+								$a3=str_replace($charProibidos,"",$_POST['alternativa3']);
+								$a4=str_replace($charProibidos,"",$_POST['alternativa4']);
+								$a5=str_replace($charProibidos,"",$_POST['alternativa5']);
 								$disciplina=$_POST['disciplinas'];
-								$ano = $_POST['ano'];
-								$vestibular=$_POST['vestibular'];
+								$ano = str_replace($charProibidos,"",$_POST['ano']);
+								$vestibular=str_replace($charProibidos,"",$_POST['vestibular']);
 								$data = date('y-m-d');
-								$resolucao = $_POST['resolucao'];
+								$resolucao = str_replace($charProibidos,"",$_POST['resolucao']);
 								$idUsuario = $_SESSION['idUsuarioSessao'];
 
 								$sql = "SELECT * FROM questao ORDER BY ID_Questao DESC";
