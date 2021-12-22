@@ -14,17 +14,17 @@
 	<body>
 		
 		<ul id="dropdown1" class="dropdown-content">
-		  <li><a href="materias.html">Fazer questões</a></li>
+		  <li><a href="materias.php">Fazer questões</a></li>
 		  <li><a href="cadastrar-questao.php">Cadastrar questões</a></li>
 		</ul>
 	  
 		<nav class="white" role="navigation">
 		  <div class="nav-wrapper container">
-			<a id="logo-container" href="index.html" class="brand-logo">ResolV</a>
+			<a id="logo-container" href="index.php" class="brand-logo">ResolV</a>
 			<ul class="right hide-on-med-and-down">
 			  <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Questões<i class="material-icons right">arrow_drop_down</i></a></li>
-			  <li><a href="login.html">Login</a></li>
-			  <li><a href="registrar.html">Cadastrar</a></li>
+			  <li><a href="login.php">Login</a></li>
+			  <li><a href="registrar.php?cadastro=0">Cadastrar</a></li>
 			</ul>
 	  
 			<ul id="nav-mobile" class="sidenav">
@@ -34,28 +34,22 @@
 		  </div>
 		</nav>
 		
+		<br /><br />
 
 		<section class="container center-container">
             <section class="section_content">
-                    <h5 class="center"><b>Cadastrar</b></h5>
+                    <h5 class="center"><b>Login</b></h5>
 					<br />
                     <form method="POST">
-
-                        <p class="login-center"><b>Nome completo</b></p>
-                        <input type="text" class="login-center input-width" name="nome" required>
-
-                        <p class="login-center"><b>Apelido</b></p>
-                        <input type="text" class="login-center input-width" name="apelido" required>
-
                         <p class="login-center"><b>E-mail</b></p>
                         <input type="text" class="login-center input-width" name="email" required>
-                        
+        
                         <p class="login-center"><b>Senha</b></p>
                         <input type="password" class="login-center input-width" name="senha" required>
 
                         <br /> <br />
 
-                        <button type="submit" class="login-center btn waves-effect waves-light">Registrar</button>
+                        <button type="submit" class="login-center btn waves-effect waves-light">Entrar</button>
 						<br /><br />
                     </form>
             </section>

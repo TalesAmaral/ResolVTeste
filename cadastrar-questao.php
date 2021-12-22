@@ -1,3 +1,7 @@
+<?php
+session_start()
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -14,17 +18,17 @@
 	<body>
 		
 		<ul id="dropdown1" class="dropdown-content">
-		  <li><a href="materias.html">Fazer questões</a></li>
+		  <li><a href="materias.php">Fazer questões</a></li>
 		  <li><a href="cadastrar-questao.php">Cadastrar questões</a></li>
 		</ul>
 	  
 		<nav class="white" role="navigation">
 		  <div class="nav-wrapper container">
-			<a id="logo-container" href="index.html" class="brand-logo">ResolV</a>
+			<a id="logo-container" href="index.php" class="brand-logo">ResolV</a>
 			<ul class="right hide-on-med-and-down">
 			  <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Questões<i class="material-icons right">arrow_drop_down</i></a></li>
-			  <li><a href="login.html">Login</a></li>
-			  <li><a href="registrar.html">Cadastrar</a></li>
+			  <li><a href="login.php">Login</a></li>
+			  <li><a href="registrar.php?cadastro=0">Cadastrar</a></li>
 			</ul>
 	  
 			<ul id="nav-mobile" class="sidenav">
