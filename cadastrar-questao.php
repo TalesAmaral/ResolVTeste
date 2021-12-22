@@ -65,7 +65,7 @@
                             <option value="4">Alternativa 4</option>
                             <option value="5">Alternativa 5</option>
                         </select>
-                        <br /> <br />
+                        <br /> 
 						            <p class="login-center"><b>Disciplina</b></p>
                         <select class="browser-default login-center input-width">
                             <option value="-1" disabled selected>Escolha a disciplina</option>
