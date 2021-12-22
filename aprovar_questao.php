@@ -64,9 +64,7 @@
                 }
                 $conn->commit();
                 $nomeVest=$_SESSION['apVest'];
-                $sql="SELECT ID 
-                FROM vestibular INNER JOIN questao ON questao.fk_Vestibular_ID=ID 
-                WHERE questao.fk_Vestibular_ID=ID AND Nome=$nomeVest";
+                $sql="SELECT ID FROM vestibular INNER JOIN questao ON questao.fk_Vestibular_ID=ID WHERE Nome='$nomeVest'";
                 $result = $conn->query($sql);
                 if ($result->num_rows == 0) {
                     $sql="DELETE FROM vestibular WHERE Nome='$nomeVest'";
@@ -103,7 +101,7 @@
 	    <section class="section_content">
 	    <p><b><?php 
 		if($_SESSION['apResultados']==True){ #Verifica se foi encontrado alguma questão
-			echo $_SESSION['apEnunciado'];
+			echo "(".$_SESSION['apVest']." - ".$_SESSION['apAno'].") ".$_SESSION['apEnunciado'];
 		}else{
 			echo "Não foi possível achar nenhuma questão.";
 		}

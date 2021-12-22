@@ -39,7 +39,11 @@
 					$_SESSION['enunciado'] = $row["Enunciado"];
 					$_SESSION['ano'] = $row["Ano"];
 					$_SESSION['idQuestao'] = $row["ID_Questao"];
+					$idVest=$row["fk_Vestibular_ID"];
 				}
+				$sql = "SELECT Nome FROM vestibular WHERE ID='$idVest'";
+		    	$result = $conn->query($sql);
+            	$_SESSION['vest']=$result->fetch_assoc()['Nome'];
 				$_SESSION['resultados'] = True;
 				$idQuestao = $_SESSION['idQuestao'];
 			} else {
@@ -55,7 +59,7 @@
 	    <section class="section_content">
 	    <p><b><?php 
 		if($_SESSION['resultados']==True){ #Verifica se foi encontrado alguma questão
-			echo $_SESSION['enunciado'];
+			echo "(".$_SESSION['vest']." - ".$_SESSION['ano'].") ".$_SESSION['enunciado'];
 		}else{
 			echo "Não foi possível achar nenhuma questão.";
 		}
