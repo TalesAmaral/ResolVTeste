@@ -60,6 +60,7 @@
 					$_SESSION['idQuestao'] = $row["ID_Questao"];
 				}
 				$_SESSION['resultados'] = True;
+				$idQuestao = $_SESSION['idQuestao'];
 			} else {
 				$_SESSION['resultados']=False;
 			}
@@ -89,7 +90,6 @@
 			?>">
 			<?php
 			if($clicou==0 && $_SESSION['resultados']){
-				$idQuestao = $_SESSION['idQuestao'];
 				$sql = "SELECT Valor FROM alternativa 
 				INNER JOIN possui ON alternativa.ID_Alternativa = possui.fk_Alternativa_ID_Alternativa INNER JOIN questao ON questao.ID_Questao = possui.fk_Questao_ID_Questao
 				WHERE questao.ID_Questao = $idQuestao
@@ -118,7 +118,7 @@
 				mysqli_set_charset($conn,"utf8");
 				$sql = "SELECT Valor FROM alternativa
 				INNER JOIN possui ON alternativa.ID_Alternativa = possui.fk_Alternativa_ID_Alternativa INNER JOIN questao ON questao.ID_Questao = possui.fk_Questao_ID_Questao
-				WHERE ID_Alternativa = questao.fk_Alternativa_ID_Alternativa AND questao.ID_questao = $questao"; #pega a alternativa correta
+				WHERE ID_Alternativa = questao.fk_Alternativa_ID_Alternativa AND questao.ID_questao = $idQuestao"; #pega a alternativa correta
 				$result = $conn->query($sql);
 				if ($result->num_rows > 0) {
 					while($row = $result->fetch_assoc()) {
