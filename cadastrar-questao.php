@@ -96,7 +96,6 @@
 							$conn = mysqli_connect($servername, $username, $password,$database);
 							mysqli_set_charset($conn,"utf8");
 
-							$apelido = $_SESSION['apelido'];
 							$enunciado = $_POST['enunciado'];
 
 							$sql = "SELECT * FROM questao WHERE Enunciado='$enunciado'";
@@ -134,7 +133,6 @@
 									($questoesNum+5, '$a5');";
 								$conn->query($sql);
 								$conn->commit();
-								echo "'$a1'";
 								$sql = "INSERT INTO questao(ID_Questao, Enunciado, Solucao, Vestibular, Ano, fk_Disciplina_ID_Disciplina, fk_Usuario_ID_Usuario, dataCriada, fk_Alternativa_ID_Alternativa) VALUES
 									('$idQuestao', '$enunciado','$resolucao','$vestibular','$ano','$disciplina','$idUsuario','$data','$alternativaCertaId');";
 								$conn->query($sql);
