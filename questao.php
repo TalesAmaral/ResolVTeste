@@ -32,7 +32,7 @@
 		$conn = mysqli_connect($servername, $username, $password,$database);
 		mysqli_set_charset($conn,"utf8");
 		if($clicou==0){
-			$sql = "SELECT * FROM questao where fk_Disciplina_ID_Disciplina = $questao ORDER BY RAND () LIMIT 1";
+			$sql = "SELECT * FROM questao where fk_Disciplina_ID_Disciplina = $questao AND Aprovada=1 ORDER BY RAND () LIMIT 1";
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
