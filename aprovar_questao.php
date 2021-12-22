@@ -35,7 +35,7 @@
 		$conn = mysqli_connect($servername, $username, $password,$database);
 		mysqli_set_charset($conn,"utf8");
 
-        if(isset($_POST['aprovacao'])){
+        if(isset($_POST['aprovacao']) && $_SESSION['apResultados']==True){
             if($_POST['aprovacao']==1){
                 $idQuestao=$_SESSION['apIdQuestao'];
                 $sql="UPDATE questao SET aprovada=1 WHERE ID_Questao=$idQuestao";
@@ -63,12 +63,12 @@
                     $conn->query($sql);
                 }
                 $conn->commit();
+                $nomeVest=$_SESSION['apVest'];
                 $sql="SELECT ID 
                 FROM vestibular INNER JOIN questao ON questao.fk_Vestibular_ID=ID 
-                WHERE questao.fk_Vestibular_ID=ID";
+                WHERE questao.fk_Vestibular_ID=ID AND Nome=$nomeVest";
                 $result = $conn->query($sql);
                 if ($result->num_rows == 0) {
-                    $nomeVest=$_SESSION['apVest'];
                     $sql="DELETE FROM vestibular WHERE Nome='$nomeVest'";
                     $conn->query($sql);
                 }
