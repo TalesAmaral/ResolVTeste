@@ -54,17 +54,26 @@
                         $altApagar[] = $row["ID_Alternativa"];
                     }
                 }
-                $result = $conn->query($sql);
                 $sql="DELETE FROM possui WHERE fk_Questao_ID_Questao=$idQuestao";
-                $result = $conn->query($sql);
+                $conn->query($sql);
                 $sql="DELETE FROM questao WHERE ID_Questao=$idQuestao";
-                $result = $conn->query($sql);
+                $conn->query($sql);
                 foreach($altApagar as $altIdApagar){
                     $sql="DELETE FROM alternativa WHERE ID_Alternativa=$altIdApagar";
-                    $result = $conn->query($sql);
+                    $conn->query($sql);
                 }
                 $conn->commit();
+                $sql="SELECT ID 
+                FROM vestibular INNER JOIN questao ON questao.fk_Vestibular_ID=ID 
+                WHERE questao.fk_Vestibular_ID=ID";
+                $result = $conn->query($sql);
+                if ($result->num_rows == 0) {
+                    $nomeVest=$_SESSION['apVest'];
+                    $sql="DELETE FROM vestibular WHERE Nome='$nomeVest'";
+                    $conn->query($sql);
+                }
                 $_SESSION['apResultados']=False;
+                $conn->commit();
             }
         }
 
