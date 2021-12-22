@@ -90,11 +90,10 @@
 			} else {
 				$_SESSION['resultados']=False;
 			}
-		}else{
+		}else if($_SESSION['resultados']){
 			$valores = $_SESSION['alternativas'];
 		}
 		$conn->close();
-
 ?>
 
 <?php 
