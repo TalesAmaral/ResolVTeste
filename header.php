@@ -20,7 +20,11 @@
 		<a class="dropdown-trigger" href="#!" data-target="dropdown1">Questões<i class="material-icons right">arrow_drop_down</i></a>
 	</li>
 	<?php 
-		if(isset($_SESSION['login']) && $_SESSION['login']==True){
+		if(isset($_SESSION['login'])){
+			$admin = array(1,2);
+			if(in_array($_SESSION['idUsuarioSessao'], $admin)){
+				echo "<li><a href='aprovar_questao.php'>Aprovar questões</a></li>";
+			}
 			echo "<li><a href='sair.php'>Sair</a></li>";
 		}else{
 			echo"
@@ -39,7 +43,7 @@
 		<a class="dropdown-trigger" href="#!" data-target="dropdown2">Questões<i class="material-icons right">arrow_drop_down</i></a>
 	</li>
 	<?php 
-		if(isset($_SESSION['login']) && $_SESSION['login']==True){
+		if(isset($_SESSION['login'])){
 			echo "<li><a href='sair.php'>Sair</a></li>";
 		}else{
 			echo"

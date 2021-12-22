@@ -118,6 +118,8 @@
 					echo "<p class='acertou'>";
 				}else if($_POST['alternativas']==$valor && $valor!=$resposta){
 					echo "<p class='errou'>";
+				}else{
+					echo "<p>";
 				}
 			}
 		}
@@ -131,7 +133,7 @@
 				}
 		?> /><span><?php if($_SESSION['resultados']){echo $valor;} ?></span>
 			</label>
-			<p>
+			</p>
 			<?php endforeach ?>
 
 <?php
