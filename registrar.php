@@ -45,10 +45,13 @@ if(isset($_POST['apelido'])){
 	$username = "root";
 	$password = "usbw";
 	$database = "baseresolv";
-	$apelido = $_POST['apelido'];
-	$email = $_POST['email'];
-	$senha = $_POST['senha'];
-	$nome = $_POST['nome'];
+
+	$charProibidos = array("'",'"');
+
+	$apelido = str_replace($charProibidos,"",$_POST['apelido']);
+	$email = str_replace($charProibidos,"",$_POST['email']);
+	$senha = str_replace($charProibidos,"",$_POST['senha']);
+	$nome = str_replace($charProibidos,"",$_POST['nome']);
 	// Create connection
 	$conn = mysqli_connect($servername, $username, $password,$database);
 	mysqli_set_charset($conn,"utf8");
