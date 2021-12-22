@@ -89,10 +89,6 @@
 					<button type="submit" class="login-center btn waves-effect waves-light">Enviar</button>
 					<?php 
 						if(isset($_SESSION['login']) && isset($_POST['enunciado']) && $_POST['alternativaCorreta']!=-1 && $_POST['disciplinas']!=-1){
-							$servername = "localhost";
-							$username = "root";
-							$password = "usbw";
-							$database = "baseresolv";
 							$conn = mysqli_connect($servername, $username, $password,$database);
 							mysqli_set_charset($conn,"utf8");
 
@@ -183,7 +179,6 @@
 							}
 
 						}else if(isset($_SESSION['login'])==false){
-
 							echo "<span><label>Você precisa estar logado para registrar uma questão.</label></span>";
 						}else if(isset($_POST['enunciado'])){
 							echo "<span><label>Faltou preencher algum dado.</label></span>";

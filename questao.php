@@ -122,10 +122,10 @@
 					echo "<p class='acertou'>";
 				}else if($_POST['alternativas']==$valor && $valor!=$resposta){
 					echo "<p class='errou'>";
-				}else{
-					echo "<p>";
 				}
 			}
+		}else{
+			echo "<p>";
 		}
 ?>
 				<label>

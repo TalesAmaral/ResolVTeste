@@ -35,7 +35,7 @@
 		$conn = mysqli_connect($servername, $username, $password,$database);
 		mysqli_set_charset($conn,"utf8");
 
-        if(isset($_POST['aprovacao']) && $_SESSION['apResultados']==True){
+        if(isset($_POST['aprovacao']) &&  $_SESSION['apResultados']==True){
             if($_POST['aprovacao']==1){
                 $idQuestao=$_SESSION['apIdQuestao'];
                 $sql="UPDATE questao SET aprovada=1 WHERE ID_Questao=$idQuestao";
@@ -157,9 +157,11 @@
 				if($valor==$resposta){
 					echo "<p class='acertou'>";
 				}else{
-					echo "<p>";
-				}
-			}
+                    echo "<p>";
+                }
+			}else{
+                echo "<p>";
+            }
 		
 ?>
 				<label>
