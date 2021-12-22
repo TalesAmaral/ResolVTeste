@@ -88,7 +88,7 @@
 
 					<button type="submit" class="login-center btn waves-effect waves-light">Enviar</button>
 					<?php 
-						if(isset($_SESSION['login']) && $_SESSION['login']==True && isset($_POST['enunciado']) && $_POST['alternativaCorreta']!=-1 && $_POST['disciplinas']!=-1){
+						if(isset($_SESSION['login']) && isset($_POST['enunciado']) && $_POST['alternativaCorreta']!=-1 && $_POST['disciplinas']!=-1){
 							$servername = "localhost";
 							$username = "root";
 							$password = "usbw";
