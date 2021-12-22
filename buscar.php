@@ -48,7 +48,6 @@
 						<?php endforeach ?>
 
 					</select>
-					<label>Materialize Multiple Select</label>
 				</div>
 
 		</form>
