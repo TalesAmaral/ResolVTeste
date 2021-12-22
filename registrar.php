@@ -29,7 +29,7 @@ session_start()
 			  <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Questões<i class="material-icons right">arrow_drop_down</i></a></li>
 			  <?php 
 				if(isset($_SESSION['login']) && $_SESSION['login']==True){
-					echo "<li><a href='#!'>Sair</a></li>";
+					echo "<li><a href='sair.php'>Sair</a></li>";
 				}else{
 					echo"<li><a href='login.php'>Login</a></li>
 			  		<li><a href='registrar.php'>Cadastrar</a></li>";
@@ -81,7 +81,6 @@ session_start()
 							$sql = "SELECT * FROM usuario WHERE Apelido='$apelido' OR Email='$email'";
 							$result = $conn->query($sql);
 							if ($result->num_rows == 0){
-								
 								$sql = "SELECT * FROM usuario ORDER BY ID_Usuario DESC LIMIT 1";
 								$result = $conn->query($sql);
 								if ($result->num_rows > 0) {

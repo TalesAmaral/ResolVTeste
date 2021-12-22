@@ -1,3 +1,7 @@
+<?php
+	session_start()
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -23,8 +27,14 @@
 			<a id="logo-container" href="index.php" class="brand-logo">ResolV</a>
 			<ul class="right hide-on-med-and-down">
 			  <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Questões<i class="material-icons right">arrow_drop_down</i></a></li>
-			  <li><a href="login.php">Login</a></li>
-			  <li><a href="registrar.php">Cadastrar</a></li>
+			  <?php 
+				if(isset($_SESSION['login']) && $_SESSION['login']==True){
+					echo "<li><a href='sair.php'>Sair</a></li>";
+				}else{
+					echo"<li><a href='login.php'>Login</a></li>
+			  		<li><a href='registrar.php'>Cadastrar</a></li>";
+				}
+			  ?>
 			</ul>
 	  
 			<ul id="nav-mobile" class="sidenav">
@@ -40,9 +50,9 @@
             <section class="section_content">
                     <h5 class="center"><b>Login</b></h5>
 					<br />
-                    <form method="POST">
-                        <p class="login-center"><b>E-mail</b></p>
-                        <input type="text" class="login-center input-width" name="email" required>
+                    <form method="POST" action="">
+                        <p class="login-center"><b>Apelido</b></p>
+                        <input type="text" class="login-center input-width" name="apelido" required>
         
                         <p class="login-center"><b>Senha</b></p>
                         <input type="password" class="login-center input-width" name="senha" required>
@@ -50,6 +60,32 @@
                         <br /> <br />
 
                         <button type="submit" class="login-center btn waves-effect waves-light">Entrar</button>
+						<?php
+						if(isset($_POST['apelido'])){
+							$servername = "localhost";
+							$username = "root";
+							$password = "usbw";
+							$database = "baseresolv";
+							$apelido = $_POST['apelido'];
+							$senha = $_POST['senha'];
+							// Create connection
+							$conn = mysqli_connect($servername, $username, $password,$database);
+							mysqli_set_charset($conn,"utf8");
+							$sql = "SELECT * FROM usuario WHERE Apelido='$apelido' AND Senha='$senha'";
+							$result = $conn->query($sql);
+							if ($result->num_rows == 1) {
+								$_SESSION['login']=True;
+								$_SESSION['apelido']=$apelido;
+								$host  = $_SERVER['HTTP_HOST'];
+								$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+								$extra = 'index.php';
+								header("Location: http://$host$uri/$extra");
+								exit;
+							}else{
+								echo "<span><label>Foram inseridos dados incorretos.</label></span>";
+							}
+						}
+						?>
 						<br /><br />
                     </form>
             </section>
