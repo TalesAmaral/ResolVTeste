@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['login']=False;
+$_SESSION['login']=null;
 $host  = $_SERVER['HTTP_HOST'];
 $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 $extra = 'index.php';
