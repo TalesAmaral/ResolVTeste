@@ -32,7 +32,7 @@ session_start()
 					echo "<li><a href='#!'>Sair</a></li>";
 				}else{
 					echo"<li><a href='login.php'>Login</a></li>
-			  		<li><a href='registrar.php?cadastro=0'>Cadastrar</a></li>";
+			  		<li><a href='registrar.php'>Cadastrar</a></li>";
 				}
 			  ?>
 			</ul>
@@ -49,7 +49,7 @@ session_start()
             <section class="section_content">
                     <h5 class="center"><b>Cadastrar</b></h5>
 					<br />
-                    <form method="POST" action="/registrar.php?cadastro=1">
+                    <form method="POST" action="">
 
                         <p class="login-center"><b>Nome completo</b></p>
                         <input type="text" class="login-center input-width" name="nome" required>
@@ -66,7 +66,7 @@ session_start()
                         <br /> <br />
                         <button type="submit" class="login-center btn waves-effect waves-light">Registrar</button>
 						<?php 
-						if($_GET['cadastro']==1){
+						if(isset($_POST['apelido'])){
 							$servername = "localhost";
 							$username = "root";
 							$password = "usbw";

@@ -28,7 +28,7 @@ session_start()
 			<ul class="right hide-on-med-and-down">
 			  <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Questões<i class="material-icons right">arrow_drop_down</i></a></li>
 			  <li><a href="login.php">Login</a></li>
-			  <li><a href="registrar.php?cadastro=0">Cadastrar</a></li>
+			  <li><a href="registrar.php">Cadastrar</a></li>
 			</ul>
 	  
 			<ul id="nav-mobile" class="sidenav">
