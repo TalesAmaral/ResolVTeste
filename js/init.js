@@ -8,6 +8,10 @@
 })(jQuery); // end of jQuery name space
 
 
+$(document).ready(function(){
+	$('select').formSelect();
+});
+
 $(".dropdown-trigger").dropdown();
 
 $('#textarea1').val('');
