@@ -117,34 +117,64 @@
 								$resolucao = str_replace($charProibidos,"",$_POST['resolucao']);
 								$idUsuario = $_SESSION['idUsuarioSessao'];
 
-								$sql = "SELECT * FROM questao ORDER BY ID_Questao DESC";
+								$sql = "SELECT ID_Questao FROM questao ORDER BY ID_Questao DESC LIMIT 1";
 								$result = $conn->query($sql);
 								if ($result->num_rows > 0) {
-									$questoesNum=$result->num_rows*5;
-									$alternativaCertaId = $_POST['alternativaCorreta']+$questoesNum;
-									$idQuestao = $result->num_rows+1;
+									$idQuestao = $result->fetch_assoc()['ID_Questao']+1;
 								}else{
 									$idQuestao = 1;
 								}
 
+								$sql = "SELECT ID_Alternativa FROM alternativa ORDER BY ID_Alternativa DESC LIMIT 1";
+								$result = $conn->query($sql);
+								if ($result->num_rows > 0) {
+									$idAlt = $result->fetch_assoc()['ID_Alternativa'];
+									$alternativaCertaId = $idAlt+$_POST['alternativaCorreta'];
+								}else{
+									$idAlt = 0;
+									$alternativaCertaId = $idAlt+$_POST['alternativaCorreta'];
+								}
+
+								$sql = "SELECT ID FROM vestibular WHERE Nome='$vestibular'";
+								$result = $conn->query($sql);
+								if ($result->num_rows > 0) {
+									$idVest = $result->fetch_assoc()['ID'];
+								}else{
+									$sql = "SELECT ID FROM vestibular ORDER BY ID DESC LIMIT 1";
+									$result = $conn->query($sql);
+									if ($result->num_rows > 0) {
+										$sql = "SELECT ID FROM vestibular ORDER BY ID DESC LIMIT 1";
+										$result = $conn->query($sql);
+										$idVest = $result->fetch_assoc()['ID']+1;
+										$sql = "INSERT INTO vestibular(ID, Nome) VALUES ($idVest, '$vestibular')";
+										$conn->query($sql);
+										$conn->commit();
+									}else{
+										$sql = "INSERT INTO vestibular(ID, Nome) VALUES (1, '$vestibular')";
+										$idVest=1;
+										$conn->query($sql);
+										$conn->commit();
+									}
+								}
+
 								$sql = "INSERT INTO alternativa (ID_Alternativa, Valor) VALUES
-									($questoesNum+1, '$a1'),
-									($questoesNum+2, '$a2'),
-									($questoesNum+3, '$a3'),
-									($questoesNum+4, '$a4'),
-									($questoesNum+5, '$a5');";
+									($idAlt+1, '$a1'),
+									($idAlt+2, '$a2'),
+									($idAlt+3, '$a3'),
+									($idAlt+4, '$a4'),
+									($idAlt+5, '$a5');";
 								$conn->query($sql);
 								$conn->commit();
-								$sql = "INSERT INTO questao(ID_Questao, Enunciado, Solucao, Vestibular, Ano, fk_Disciplina_ID_Disciplina, fk_Usuario_ID_Usuario, dataCriada, fk_Alternativa_ID_Alternativa) VALUES
-									('$idQuestao', '$enunciado','$resolucao','$vestibular','$ano','$disciplina','$idUsuario','$data','$alternativaCertaId');";
+								$sql = "INSERT INTO questao(ID_Questao, Enunciado, Solucao, Ano, Aprovada, fk_Disciplina_ID_Disciplina, fk_Usuario_ID_Usuario, dataCriada, fk_Alternativa_ID_Alternativa,fk_Vestibular_ID) VALUES
+									('$idQuestao', '$enunciado','$resolucao','$ano',0,'$disciplina','$idUsuario','$data','$alternativaCertaId',$idVest);";
 								$conn->query($sql);
 								$conn->commit();
 								$sql = "INSERT INTO possui (fk_Alternativa_ID_Alternativa, fk_Questao_ID_Questao) VALUES
-									($questoesNum+1, $idQuestao),
-									($questoesNum+2, $idQuestao),
-									($questoesNum+3, $idQuestao),
-									($questoesNum+4, $idQuestao),
-									($questoesNum+5, $idQuestao);";
+									($idAlt+1, $idQuestao),
+									($idAlt+2, $idQuestao),
+									($idAlt+3, $idQuestao),
+									($idAlt+4, $idQuestao),
+									($idAlt+5, $idQuestao);";
 								$conn->query($sql);
 								$conn->commit();
 								echo "<span><label>Questão registrada com sucesso.</label></span>";
