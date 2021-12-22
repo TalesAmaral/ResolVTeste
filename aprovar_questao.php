@@ -90,8 +90,10 @@
             $_SESSION['apVest']=$result->fetch_assoc()['Nome'];
 			$_SESSION['apResultados'] = True;
 			$idQuestao = $_SESSION['apIdQuestao'];
-		} else {
-			$_SESSION['apResultados']=False;
+		} else if($_SESSION['apResultados']){
+			$valores = $_SESSION['apAlternativas'];
+		}else{
+			$valores = array(0,0,0,0,0);
 		}
 		
 
