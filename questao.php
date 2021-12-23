@@ -91,7 +91,11 @@
 				$_SESSION['resultados']=False;
 			}
 		}else{
-			$valores = $_SESSION['alternativas'];
+			if(isset($_SESSION['alternativas'])){
+				$valores=$_SESSION['alternativas'];
+			}else{
+				$valores=array(0,0,0,0,0);
+			}
 		}
 		$conn->close();
 ?>
