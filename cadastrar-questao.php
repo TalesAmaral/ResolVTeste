@@ -88,7 +88,7 @@
 
 					<button type="submit" class="login-center btn waves-effect waves-light">Enviar</button>
 					<?php 
-						if(isset($_SESSION['login']) && isset($_POST['enunciado']) && $_POST['alternativaCorreta']!=-1 && $_POST['disciplinas']!=-1){
+						if(isset($_SESSION['login']) && isset($_POST['enunciado']) && $_POST['alternativaCorreta']!=-1 && $_POST['disciplinas']!=-1 && is_int($_POST['ano'])){
 							$conn = mysqli_connect($servername, $username, $password,$database);
 							mysqli_set_charset($conn,"utf8");
 
@@ -162,7 +162,7 @@
 								$conn->query($sql);
 								$conn->commit();
 								$sql = "INSERT INTO questao(ID_Questao, Enunciado, Solucao, Ano, Aprovada, fk_Disciplina_ID_Disciplina, fk_Usuario_ID_Usuario, dataCriada, fk_Alternativa_ID_Alternativa,fk_Vestibular_ID) VALUES
-									('$idQuestao', '$enunciado','$resolucao','$ano',0,'$disciplina','$idUsuario','$data','$alternativaCertaId',$idVest);";
+									('$idQuestao', '$enunciado','$resolucao',$ano,0,'$disciplina','$idUsuario','$data','$alternativaCertaId',$idVest);";
 								$conn->query($sql);
 								$conn->commit();
 								$sql = "INSERT INTO possui (fk_Alternativa_ID_Alternativa, fk_Questao_ID_Questao) VALUES
@@ -181,7 +181,7 @@
 						}else if(isset($_SESSION['login'])==false){
 							echo "<span><label>Você precisa estar logado para registrar uma questão.</label></span>";
 						}else if(isset($_POST['enunciado'])){
-							echo "<span><label>Faltou preencher algum dado.</label></span>";
+							echo "<span><label>Faltou preencher algum dado ou algum dado foi preenchido incorretamente.</label></span>";
 						}
 
 				      ?>
