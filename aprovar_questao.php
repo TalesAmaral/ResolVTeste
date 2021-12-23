@@ -90,6 +90,10 @@
             $_SESSION['apVest']=$result->fetch_assoc()['Nome'];
 			$_SESSION['apResultados'] = True;
 			$idQuestao = $_SESSION['apIdQuestao'];
+			$sql = "SELECT Nome FROM disciplina INNER JOIN questao ON questao.fk_Disciplina_ID_Disciplina=disciplina.ID_Disciplina
+			WHERE questao.ID_Questao=$idQuestao";
+			$result = $conn->query($sql);
+            $_SESSION['apMateria']=$result->fetch_assoc()['Nome'];
 		} else {
 			$_SESSION['apResultados']=False;
 		}
@@ -101,7 +105,7 @@
 	    <section class="section_content">
 	    <p><b><?php 
 		if($_SESSION['apResultados']==True){ #Verifica se foi encontrado alguma questão
-			echo "(".$_SESSION['apVest']." - ".$_SESSION['apAno'].") ".$_SESSION['apEnunciado'];
+			echo $_SESSION['apMateria']." - (".$_SESSION['apVest']." - ".$_SESSION['apAno'].") ".$_SESSION['apEnunciado'];
 		}else{
 			echo "Não foi possível achar nenhuma questão.";
 		}
