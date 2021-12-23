@@ -126,10 +126,8 @@
 			} else {
 				$_SESSION['apResultados']=False;
 			}
-		}else if($_SESSION['apResultados']){
-			$valores = $_SESSION['apAlternativas'];
 		}else{
-			$valores = array(0,0,0,0,0);
+			$valores = $_SESSION['apAlternativas'];
 		}
 		$conn->close();
 
