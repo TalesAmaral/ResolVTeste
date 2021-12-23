@@ -88,7 +88,7 @@
 
 					<button type="submit" class="login-center btn waves-effect waves-light">Enviar</button>
 					<?php 
-						if(isset($_SESSION['login']) && isset($_POST['enunciado']) && $_POST['alternativaCorreta']!=-1 && $_POST['disciplinas']!=-1){
+						if(isset($_SESSION['login']) && isset($_POST['enunciado']) && isset($_POST['alternativaCorreta']) && isset($_POST['disciplinas']) && is_numeric($_POST['ano'])){
 							$conn = mysqli_connect($servername, $username, $password,$database);
 							mysqli_set_charset($conn,"utf8");
 
