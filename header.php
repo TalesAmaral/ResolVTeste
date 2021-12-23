@@ -3,13 +3,13 @@
   <ul id="dropdown1" class="dropdown-content">
     <li><a href="materias.php">Fazer questões</a></li>
     <li><a href="cadastrar-questao.php">Cadastrar questões</a></li>
-     <!-- <li><a href="buscar.php">Buscar questões</a></li> -->
+    <li><a href="buscar.php">Buscar questões</a></li> 
   </ul>
 	
   <ul id="dropdown2" class="dropdown-content">
     <li><a href="materias.php">Fazer questões</a></li>
     <li><a href="cadastrar-questao.php">Cadastrar questões</a></li>
-    <!-- <li><a href="buscar.php">Buscar questões</a></li> -->
+    <li><a href="buscar.php">Buscar questões</a></li> 
   </ul>
 
   <nav class="white" role="navigation">
