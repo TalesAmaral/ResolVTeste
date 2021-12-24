@@ -23,7 +23,7 @@
 		if(isset($_SESSION['login'])){
 			$admin = array(1,2);
 			if(in_array($_SESSION['idUsuarioSessao'], $admin)){
-				echo "<li><a href='aprovar_questao.php'>Aprovar questões</a></li>";
+				echo "<li><a href='aprovar_questao.php'>Aprovar Questões</a></li>";
 			}
 			echo "<li><a href='sair.php'>Sair</a></li>";
 		}else{
@@ -44,7 +44,11 @@
 	</li>
 	<?php 
 		if(isset($_SESSION['login'])){
-			echo "<li><a href='sair.php'>Sair</a></li>";
+			$admin = array(1,2);
+			if(in_array($_SESSION['idUsuarioSessao'], $admin)){
+				echo "<li><a href='aprovar_questao.php'>Aprovar Questões</a></li>";
+			}
+			echo "<li><a href='sair.php'>sair</a></li>";
 		}else{
 			echo"
 				<li>

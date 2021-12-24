@@ -16,6 +16,8 @@
 	<link href="css/login.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 	<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 	<link href="css/form.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </head>
 
     <body>
