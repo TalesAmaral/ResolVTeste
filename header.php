@@ -22,10 +22,26 @@
 	<?php 
 		if(isset($_SESSION['login'])){
 			$admin = array(1,2);
+			echo '<ul id="dropdown3" class="dropdown-content">
+			<li><a href="perfil.php">Perfil</a></li>
+			<li><a href="sair.php">Sair</a></li>
+		  	</ul>';
+			
+			$servername = "localhost";
+			$username = "root";
+			$password = "usbw";
+			$database = "baseresolv";
+			$conn = mysqli_connect($servername, $username, $password,$database);
+			mysqli_set_charset($conn,"utf8");
+			$idUser = $_SESSION['idUsuarioSessao'];
+			$sql = "SELECT Apelido FROM usuario WHERE ID_Usuario=$idUser";
+			$result = $conn->query($sql);
+			$apelido = $result->fetch_assoc()['Apelido'];
+			
 			if(in_array($_SESSION['idUsuarioSessao'], $admin)){
 				echo "<li><a href='aprovar_questao.php'>Aprovar Questões</a></li>";
 			}
-			echo "<li><a href='sair.php'>Sair</a></li>";
+			echo '<li><a class="dropdown-trigger" href="#!" data-target="dropdown3">'.$apelido.'<i class="material-icons right">arrow_drop_down</i></a></li>';
 		}else{
 			echo"
 				<li>
