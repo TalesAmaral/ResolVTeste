@@ -20,7 +20,7 @@
 		<form action = "" action = "post" class = "row">
 
 			<div class="input-field col s12 m3">
-				<select name = "disciplinas" multiple>
+				<select name = "disciplinas[]" multiple>
 					<option value="" disabled selected>Escolha as disciplinas</option>
 
 					<?php 
@@ -32,13 +32,11 @@
 						// Create connection
 						$conn = mysqli_connect($servername, $username, $password,$database);
 						mysqli_set_charset($conn,"utf8");
-						$sql = "SELECT Nome FROM disciplina ORDER BY ID_Disciplina ASC;";
-						$i = 1;
+						$sql = "SELECT * FROM disciplina ORDER BY ID_Disciplina ASC;";
 						$result = $conn->query($sql);
 						if ($result->num_rows > 0) {
 							while($row = $result->fetch_assoc()) {
-								echo "<option value=\"$i\"> {$row["Nome"]}</option>";
-								$i+=1;
+								echo "<option value=\"{$row["ID_Disciplina"]}\"> {$row["Nome"]}</option>";
 							}
 						}
 
@@ -48,7 +46,7 @@
 				</select>
 			</div>
 			<div class="input-field col s12 m3">
-				<select name = "vestibulares" multiple>
+				<select name = "vestibulares[]" multiple>
 					<option value="" disabled selected>Escolha os Vestibulares</option>
 
 					<?php 
@@ -60,13 +58,11 @@
 						// Create connection
 						$conn = mysqli_connect($servername, $username, $password,$database);
 						mysqli_set_charset($conn,"utf8");
-						$sql = "SELECT Nome FROM Vestibular ORDER BY ID ASC;";
-						$i = 1;
+						$sql = "SELECT * FROM Vestibular ORDER BY ID ASC;";
 						$result = $conn->query($sql);
 						if ($result->num_rows > 0) {
 							while($row = $result->fetch_assoc()) {
-								echo "<option value=\"$i\"> {$row["Nome"]}</option>";
-								$i+=1;
+								echo "<option value=\"{$row["ID"]}\"> {$row["Nome"]}</option>";
 							}
 						}
 
@@ -107,11 +103,14 @@
 			<tbody>
 				<?php
 						if(!empty($_REQUEST["vestibulares"]) && !empty($_REQUEST["disciplinas"])){
-							echo "{$_REQUEST["termo"]} ";
-							echo "{$_REQUEST["vestibulares"]} ";
-							echo "{$_REQUEST["disciplinas"]} ";
-							echo "{$_REQUEST["ano-comeco"]} ";
-							echo "{$_REQUEST["ano-fim"]} ";
+							$Enunciado = $_REQUEST["termo"];
+							$vestibulares = $_REQUEST["vestibulares"];
+							$disciplinas = $_REQUEST["disciplinas"];
+							$anoComeco = $_REQUEST["ano-comeco"];
+							$anoFim = $_REQUEST["ano-fim"];
+
+							$vestibulares =  "(".implode(",",$vestibulares).")";
+							$disciplinas =  "(".implode(",",$disciplinas).")";
 
 							$servername = "localhost";
 							$username = "root";
@@ -122,10 +121,11 @@
 							$conn = mysqli_connect($servername, $username, $password,$database);
 							mysqli_set_charset($conn,"utf8");
 
-							$sql = "SELECT Enunciado, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID);";
+							$sql = "SELECT Enunciado, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID) where Enunciado like '%{$Enunciado}%' and questao.fk_Disciplina_ID_Disciplina in $disciplinas and questao.fk_Vestibular_ID in $vestibulares;";
 							$i = 1;
 							$result = $conn->query($sql);
-							if ($result->num_rows > 0) {
+							var_dump($vestibulares);
+							if ($result and $result->num_rows > 0) {
 								while($row = $result->fetch_assoc()) {
 									echo "
 
