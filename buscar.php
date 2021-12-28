@@ -102,6 +102,14 @@
 			</thead>
 			<tbody>
 				<?php
+							$servername = "localhost";
+							$username = "root";
+							$password = "usbw";
+							$database = "baseresolv";
+
+							// Create connection
+							$conn = mysqli_connect($servername, $username, $password,$database);
+							mysqli_set_charset($conn,"utf8");
 						if(!empty($_REQUEST["vestibulares"]) && !empty($_REQUEST["disciplinas"])){
 							$Enunciado = $_REQUEST["termo"];
 							$vestibulares = $_REQUEST["vestibulares"];
@@ -112,19 +120,34 @@
 							$vestibulares =  "(".implode(",",$vestibulares).")";
 							$disciplinas =  "(".implode(",",$disciplinas).")";
 
-							$servername = "localhost";
-							$username = "root";
-							$password = "usbw";
-							$database = "baseresolv";
 
-							// Create connection
-							$conn = mysqli_connect($servername, $username, $password,$database);
-							mysqli_set_charset($conn,"utf8");
-
-							$sql = "SELECT Enunciado, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID) where Enunciado like '%{$Enunciado}%' and questao.fk_Disciplina_ID_Disciplina in $disciplinas and questao.fk_Vestibular_ID in $vestibulares;";
-							$i = 1;
+							$sql = "SELECT Enunciado, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID) where Enunciado like '%{$Enunciado}%' and questao.fk_Disciplina_ID_Disciplina in $disciplinas and questao.fk_Vestibular_ID in $vestibulares and questao.ano >= $anoComeco and questao.ano <= $anoFim;";
 							$result = $conn->query($sql);
-							var_dump($vestibulares);
+							if ($result and $result->num_rows > 0) {
+								while($row = $result->fetch_assoc()) {
+									echo "
+
+										<tr>
+											<td>
+												{$row["Enunciado"]}
+											</td>
+											<td>
+												{$row["disciplina"]}
+											</td>
+											<td>
+												{$row["Vestibular"]}
+											</td>
+											<td>
+												{$row["Ano"]}
+											</td>
+										</tr>
+									   ";
+								}
+							}
+						} else{
+
+							$sql = "SELECT Enunciado, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID);";
+							$result = $conn->query($sql);
 							if ($result and $result->num_rows > 0) {
 								while($row = $result->fetch_assoc()) {
 									echo "
