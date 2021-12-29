@@ -67,7 +67,8 @@ if(isset($_POST['apelido'])){
 		}else{
 			$idUsuario = 1;
 		}
-		$sql = "INSERT INTO usuario(Nome, Email, Apelido, Senha, ID_Usuario) VALUES ('$nome', '$email', '$apelido', '$senha', $idUsuario);";
+		$hash = password_hash($senha, PASSWORD_DEFAULT);
+		$sql = "INSERT INTO usuario(Nome, Email, Apelido, Senha, ID_Usuario) VALUES ('$nome', '$email', '$apelido', '$hash', $idUsuario);";
 		$result = $conn->query($sql);
 		$conn->commit();
 		echo "<label><span>Conta criada com sucesso.</span></label>";

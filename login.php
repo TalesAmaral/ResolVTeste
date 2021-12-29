@@ -47,16 +47,22 @@ if(isset($_POST['apelido'])){
 	// Create connection
 	$conn = mysqli_connect($servername, $username, $password,$database);
 	mysqli_set_charset($conn,"utf8");
-	$sql = "SELECT ID_Usuario FROM usuario WHERE Apelido='$apelido' AND Senha='$senha'";
+	$sql = "SELECT ID_Usuario,Senha FROM usuario WHERE Apelido='$apelido';";
 	$result = $conn->query($sql);
 	if ($result->num_rows == 1) {
-		$_SESSION['login']=True;
-		$_SESSION['idUsuarioSessao']=$result->fetch_assoc()['ID_Usuario'];
-		$host  = $_SERVER['HTTP_HOST'];
-		$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-		$extra = 'index.php';
-		header("Location: http://$host$uri/$extra");
-		exit;
+		$row = $result->fetch_assoc();
+		if ( password_verify($senha, $row['Senha'])){
+			$_SESSION['login']=True;
+			$_SESSION['idUsuarioSessao']=$row['ID_Usuario'];
+			$host  = $_SERVER['HTTP_HOST'];
+			$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+			$extra = 'index.php';
+			header("Location: http://$host$uri/$extra");
+			exit;
+		}
+		else{
+			echo "<span><label>Foram inseridos dados incorretos.</label></span>";
+		}
 	}else{
 		echo "<span><label>Foram inseridos dados incorretos.</label></span>";
 	}
