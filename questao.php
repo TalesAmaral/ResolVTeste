@@ -38,14 +38,14 @@
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
-					$_SESSION['enunciado'] = html_entity_decode($row["Enunciado"]);
-					$_SESSION['ano'] = html_entity_decode($row["Ano"]);
-					$_SESSION['idQuestao'] = html_entity_decode($row["ID_Questao"]);
+					$_SESSION['enunciado'] = $row["Enunciado"];
+					$_SESSION['ano'] = $row["Ano"];
+					$_SESSION['idQuestao'] = $row["ID_Questao"];
 					$idVest=$row["fk_Vestibular_ID"];
 				}
 				$sql = "SELECT Nome FROM vestibular WHERE ID='$idVest'";
 		    	$result = $conn->query($sql);
-            	$_SESSION['vest']=html_entity_decode($result->fetch_assoc()['Nome']);
+            	$_SESSION['vest']=$result->fetch_assoc()['Nome'];
 				$_SESSION['resultados'] = True;
 				$idQuestao = $_SESSION['idQuestao'];
 			} else {
@@ -125,7 +125,7 @@
 			if($clicou==1 && isset($_POST['alternativas'])){
 				if($valor==$resposta){
 					echo "<p class='acertou'>";
-				}else if($_POST['alternativas']==$valor && $valor!=$resposta){
+				}else if(filter_var($_POST['alternativas'], FILTER_SANITIZE_STRING)==$valor && $valor!=$resposta){
 					echo "<p class='errou'>";
 				}
 			}
@@ -140,7 +140,7 @@
 						echo "checked";
 					}
 				}
-		?> /><span><?php if($_SESSION['resultados']){echo html_entity_decode($valor);} ?></span>
+		?> /><span><?php if($_SESSION['resultados']){echo $valor;} ?></span>
 			</label>
 			</p>
 			<?php endforeach ?>
@@ -154,7 +154,7 @@
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
-					$resolucao = html_entity_decode($row["Solucao"]);
+					$resolucao = $row["Solucao"];
 				}
 			}
 			echo $resolucao."<br /><br />";

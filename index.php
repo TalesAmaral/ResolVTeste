@@ -47,7 +47,7 @@ session_start()
 	    <h2 class="center brown-text"><i class="material-icons">flash_on</i></h2>
 	    <h5 class="center">Eficiência</h5>
 
-	    <p class="light">Com o ResolV você terá a rapidez de encontrar uma variedade de questões em um clique.</p>
+	    <p class="light justify">Com o ResolV você terá a rapidez de encontrar uma variedade de questões em um clique.</p>
 	  </div>
 	</div>
 
@@ -56,7 +56,7 @@ session_start()
 	    <h2 class="center brown-text"><i class="material-icons">group</i></h2>
 	    <h5 class="center">Comunidade</h5>
 
-	    <p class="light">O tamanho do banco de dados é realizado pela comunidade do Resolv, portanto, caso tenha alguma questão, envie para nós!</p>
+	    <p class="light justify">O tamanho do banco de dados é realizado pela comunidade do Resolv, portanto, caso tenha alguma questão, envie para nós!</p>
 	  </div>
 	</div>
 
@@ -65,7 +65,7 @@ session_start()
 	    <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
 	    <h5 class="center">Sem burocracia</h5>
 
-	    <p class="light">Nós da ResolV, realizamos esse site no intuito de fazê-lo sem nenhuma burocracia e totalmente gratuito!</p>
+	    <p class="light justify">Nós da ResolV, realizamos esse site no intuito de fazê-lo sem nenhuma burocracia e totalmente gratuito!</p>
 	  </div>
 	</div>
       </div>
@@ -92,7 +92,7 @@ session_start()
 	<div class="col s12 center">
 	  <h3><i class="mdi-content-send brown-text"></i></h3>
 	  <h4>Nos contate</h4>
-	  <p class="left-align light">Nos contate através do seguinte e-mail: suporte@resolv.com</p>
+	  <p class="left-align light justify">Nos contate através do seguinte e-mail: suporte@resolv.com</p>
 	</div>
       </div>
 
@@ -116,7 +116,7 @@ session_start()
       <div class="row">
 	<div>
 	  <h5 class="white-text">Sobre nós</h5>
-	  <p>Na realidade estudantil, muitos alunos de baixa renda se encontram numa situação de falta de acesso a questões. Assim sendo, muitos buscam bancos de questões, que por sua vez são pagos, limitados ou burocráticos. Surge o ResolV entendendo a realidade social e de distribuição de renda no Brasil, onde, segundo a Unicef, em 2020, 5,5 milhões de brasileiros ficaram sem acesso à educação, somado aos outros vários problemas que afetam esse sistema (trabalho infantil, fuga das escolas, etc). O projeto é uma iniciativa sem fins lucrativos que visa apoiar essa problemática social de uma forma intuitiva, direta e sem burocracia. Inúmeras vezes o estudante necessita da resolução de alguma questão, mas para acessá-la, necessita de fazer login, nessa perspectiva, o ResolV proporciona conexão às atividades sem precisar e cadastro. Mesmo assim, há um sistema de matrícula com senha para salvar suas resoluções, simulados, cadastrar seus vestibulares preferidos para melhor filtragem, por exemplo. O sistema de simulado escolhe aleatoriamente questões nos moldes da prova escolhida e forma uma bateria de exercícios. Já o calendário destaca as datas da prova que você prestará (pode escolher quantos vestibulares desejar). Os usuários também poderão sugerir questões que serão revisadas e poderão entrar no banco de dados do site.</p>
+	  <p class="justify">Na realidade estudantil, muitos alunos de baixa renda se encontram numa situação de falta de acesso a questões. Assim sendo, muitos buscam bancos de questões, que por sua vez são pagos, limitados ou burocráticos. Surge o ResolV entendendo a realidade social e de distribuição de renda no Brasil, onde, segundo a Unicef, em 2020, 5,5 milhões de brasileiros ficaram sem acesso à educação, somado aos outros vários problemas que afetam esse sistema (trabalho infantil, fuga das escolas, etc). O projeto é uma iniciativa sem fins lucrativos que visa apoiar essa problemática social de uma forma intuitiva, direta e sem burocracia. Inúmeras vezes o estudante necessita da resolução de alguma questão, mas para acessá-la, necessita de fazer login, nessa perspectiva, o ResolV proporciona conexão às atividades sem precisar e cadastro. Mesmo assim, há um sistema de matrícula com senha para salvar suas resoluções, simulados, cadastrar seus vestibulares preferidos para melhor filtragem, por exemplo. O sistema de simulado escolhe aleatoriamente questões nos moldes da prova escolhida e forma uma bateria de exercícios. Já o calendário destaca as datas da prova que você prestará (pode escolher quantos vestibulares desejar). Os usuários também poderão sugerir questões que serão revisadas e poderão entrar no banco de dados do site.</p>
 
     </div>
 
