@@ -181,7 +181,7 @@
 		$pdf->AddPage();
 		$pdf->SetTitle(utf8_decode('Questão'));
 		$pdf->SetFont('Arial','',12);
-		$pdf->MultiCell(190,6,utf8_decode(html_entity_decode($_SESSION['enunciado'], ENT_QUOTES)));
+		$pdf->MultiCell(190,6,utf8_decode(html_entity_decode('('.$_SESSION['vest'].' - '.$_SESSION['ano'].') '.$_SESSION['enunciado'], ENT_QUOTES)));
 		$pdf->MultiCell(190,8,'a) '.utf8_decode(html_entity_decode($_SESSION['alternativas'][0], ENT_QUOTES)));
 		$pdf->MultiCell(190,8,'b) '.utf8_decode(html_entity_decode($_SESSION['alternativas'][1], ENT_QUOTES)));
 		$pdf->MultiCell(190,8,'c) '.utf8_decode(html_entity_decode($_SESSION['alternativas'][2], ENT_QUOTES)));
@@ -189,7 +189,7 @@
 		$pdf->MultiCell(190,8,'e) '.utf8_decode(html_entity_decode($_SESSION['alternativas'][4], ENT_QUOTES)));
 		$pdf->MultiCell(190,10,utf8_decode('Resolução:'));
 		$pdf->MultiCell(190,8,utf8_decode(html_entity_decode($_SESSION['resolucao'], ENT_QUOTES)));
-		$pdf->Output('D','questao.pdf');
+		$pdf->Output('D','QUESTAO_RESOLV.pdf');
 	} 
 	?>
 		</form>
