@@ -46,32 +46,36 @@ if(isset($_POST['apelido'])){
 	$password = "usbw";
 	$database = "baseresolv";
 
-	$charProibidos = array("'",'"');
 
-	$apelido = str_replace($charProibidos,"",$_POST['apelido']);
-	$email = str_replace($charProibidos,"",$_POST['email']);
-	$senha = str_replace($charProibidos,"",$_POST['senha']);
-	$nome = str_replace($charProibidos,"",$_POST['nome']);
+	$apelido = filter_var($_POST['apelido'], FILTER_SANITIZE_STRING);
+	$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+	$senha = filter_var($_POST['senha'], FILTER_SANITIZE_STRING);
+	$nome = filter_var($_POST['nome'], FILTER_SANITIZE_STRING);
 	// Create connection
 	$conn = mysqli_connect($servername, $username, $password,$database);
 	mysqli_set_charset($conn,"utf8");
 	$sql = "SELECT * FROM usuario WHERE Apelido='$apelido' OR Email='$email'";
 	$result = $conn->query($sql);
+
 	if ($result->num_rows == 0){
-		$sql = "SELECT * FROM usuario ORDER BY ID_Usuario DESC LIMIT 1";
-		$result = $conn->query($sql);
-		if ($result->num_rows > 0) {
-			while($row = $result->fetch_assoc()) {
-				$idUsuario=$row['ID_Usuario']+1;
+		if(filter_var($email, FILTER_VALIDATE_EMAIL)){ //Não foi necessária a utilização de outro filtro.
+			$sql = "SELECT * FROM usuario ORDER BY ID_Usuario DESC LIMIT 1";
+			$result = $conn->query($sql);
+			if ($result->num_rows > 0) {
+				while($row = $result->fetch_assoc()) {
+					$idUsuario=$row['ID_Usuario']+1;
+				}
+			}else{
+				$idUsuario = 1;
 			}
+			$hash = password_hash($senha, PASSWORD_DEFAULT);
+			$sql = "INSERT INTO usuario(Nome, Email, Apelido, Senha, ID_Usuario) VALUES ('$nome', '$email', '$apelido', '$hash', $idUsuario);";
+			$result = $conn->query($sql);
+			$conn->commit();
+			echo "<label><span>Conta criada com sucesso.</span></label>";
 		}else{
-			$idUsuario = 1;
+			echo "<label><span>Foi preenchido algum dado incorretamente.</span></label>";
 		}
-		$hash = password_hash($senha, PASSWORD_DEFAULT);
-		$sql = "INSERT INTO usuario(Nome, Email, Apelido, Senha, ID_Usuario) VALUES ('$nome', '$email', '$apelido', '$hash', $idUsuario);";
-		$result = $conn->query($sql);
-		$conn->commit();
-		echo "<label><span>Conta criada com sucesso.</span></label>";
 	}else{
 		echo "<label><span>Foi colocado um email ou apelido existente.</span></label>";
 	}

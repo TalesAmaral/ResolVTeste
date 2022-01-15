@@ -41,7 +41,7 @@
 			if(in_array($_SESSION['idUsuarioSessao'], $admin)){
 				echo "<li><a href='aprovar_questao.php'>Aprovar Questões</a></li>";
 			}
-			echo '<li><a class="dropdown-trigger" href="#!" data-target="dropdown3">'.$apelido.'<i class="material-icons right">arrow_drop_down</i></a></li>';
+			echo '<li><a class="dropdown-trigger" href="#!" data-target="dropdown3">'.html_entity_decode($apelido).'<i class="material-icons right">arrow_drop_down</i></a></li>';
 		}else{
 			echo"
 				<li>

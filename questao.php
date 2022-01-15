@@ -38,14 +38,14 @@
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
-					$_SESSION['enunciado'] = $row["Enunciado"];
-					$_SESSION['ano'] = $row["Ano"];
-					$_SESSION['idQuestao'] = $row["ID_Questao"];
+					$_SESSION['enunciado'] = html_entity_decode($row["Enunciado"]);
+					$_SESSION['ano'] = html_entity_decode($row["Ano"]);
+					$_SESSION['idQuestao'] = html_entity_decode($row["ID_Questao"]);
 					$idVest=$row["fk_Vestibular_ID"];
 				}
 				$sql = "SELECT Nome FROM vestibular WHERE ID='$idVest'";
 		    	$result = $conn->query($sql);
-            	$_SESSION['vest']=$result->fetch_assoc()['Nome'];
+            	$_SESSION['vest']=html_entity_decode($result->fetch_assoc()['Nome']);
 				$_SESSION['resultados'] = True;
 				$idQuestao = $_SESSION['idQuestao'];
 			} else {
@@ -140,7 +140,7 @@
 						echo "checked";
 					}
 				}
-		?> /><span><?php if($_SESSION['resultados']){echo $valor;} ?></span>
+		?> /><span><?php if($_SESSION['resultados']){echo html_entity_decode($valor);} ?></span>
 			</label>
 			</p>
 			<?php endforeach ?>
@@ -154,7 +154,7 @@
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
-					$resolucao = $row["Solucao"];
+					$resolucao = html_entity_decode($row["Solucao"]);
 				}
 			}
 			echo $resolucao."<br /><br />";

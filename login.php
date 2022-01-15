@@ -40,10 +40,8 @@ if(isset($_POST['apelido'])){
 	$password = "usbw";
 	$database = "baseresolv";
 
-	$charProibidos = array("'",'"');
-
-	$apelido = str_replace($charProibidos,"",$_POST['apelido']);
-	$senha = str_replace($charProibidos,"",$_POST['senha']);
+	$senha = filter_var($_POST['senha'], FILTER_SANITIZE_STRING);
+	$apelido = filter_var($_POST['apelido'], FILTER_SANITIZE_STRING);
 	// Create connection
 	$conn = mysqli_connect($servername, $username, $password,$database);
 	mysqli_set_charset($conn,"utf8");

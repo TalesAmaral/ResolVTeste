@@ -15,7 +15,6 @@
 		<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 	</head>
 	<body>
-
 		<?php include 'header.php';?>
 		<form action = "" action = "post" class = "row">
 

@@ -88,29 +88,30 @@
 
 					<button type="submit" class="login-center btn waves-effect waves-light">Enviar</button>
 					<?php 
-						if(isset($_SESSION['login']) && isset($_POST['enunciado']) && isset($_POST['alternativaCorreta']) && isset($_POST['disciplinas']) && is_numeric($_POST['ano'])){
+						if(isset($_SESSION['login']) && isset($_POST['enunciado']) && isset($_POST['alternativaCorreta']) && isset($_POST['disciplinas']) && is_numeric($_POST['ano'])
+						&& filter_var($_POST['ano'], FILTER_VALIDATE_INT)){ //Aqui não foi necessário a verificação de duas entradas
 							$conn = mysqli_connect($servername, $username, $password,$database);
 							mysqli_set_charset($conn,"utf8");
 
-							$charProibidos = array("'",'"');
+							$enunciado = filter_var($_POST['enunciado'], FILTER_SANITIZE_STRING);
 
-							$enunciado = str_replace($charProibidos,"",$_POST['enunciado']);
+
 
 							$sql = "SELECT * FROM questao WHERE Enunciado='$enunciado'";
 							$result = $conn->query($sql);
 							if ($result->num_rows > 0){
 								echo "<span><label>A questão já existe.</label></span>";
 							}else{
-								$a1=str_replace($charProibidos,"",$_POST['alternativa1']);
-								$a2=str_replace($charProibidos,"",$_POST['alternativa2']);
-								$a3=str_replace($charProibidos,"",$_POST['alternativa3']);
-								$a4=str_replace($charProibidos,"",$_POST['alternativa4']);
-								$a5=str_replace($charProibidos,"",$_POST['alternativa5']);
+								$a1=filter_var($_POST['alternativa1'], FILTER_SANITIZE_STRING);
+								$a2=filter_var($_POST['alternativa2'], FILTER_SANITIZE_STRING);
+								$a3=filter_var($_POST['alternativa3'], FILTER_SANITIZE_STRING);
+								$a4=filter_var($_POST['alternativa4'], FILTER_SANITIZE_STRING);
+								$a5=filter_var($_POST['alternativa5'], FILTER_SANITIZE_STRING);
 								$disciplina=$_POST['disciplinas'];
 								$ano = str_replace($charProibidos,"",$_POST['ano']);
-								$vestibular=str_replace($charProibidos,"",$_POST['vestibular']);
+								$vestibular=filter_var($_POST['vestibular'], FILTER_SANITIZE_STRING);
 								$data = date('y-m-d');
-								$resolucao = str_replace($charProibidos,"",$_POST['resolucao']);
+								$resolucao = filter_var($_POST['resolucao'], FILTER_SANITIZE_STRING);
 								$idUsuario = $_SESSION['idUsuarioSessao'];
 
 								$sql = "SELECT ID_Questao FROM questao ORDER BY ID_Questao DESC LIMIT 1";
