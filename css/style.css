@@ -56,7 +56,11 @@ footer.page-footer {
   margin: 0;
 }
 
-.justify{
-  text-align: justify;
-  text-justify: inter-word;
+[data-href] { 
+  cursor: pointer; 
 }
+
+.justify{
+    text-align: justify;
+    text-justify: inter-word;
+  }

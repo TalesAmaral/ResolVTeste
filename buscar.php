@@ -16,11 +16,11 @@
 	</head>
 	<body>
 		<?php include 'header.php';?>
-		<form action = "" action = "post" class = "row">
+		<form action= "" method='POST' class = "row">
 
 			<div class="input-field col s12 m3">
 				<select name = "disciplinas[]" multiple>
-					<option value="" disabled selected>Escolha as disciplinas</option>
+					<option value="" disabled>Escolha as disciplinas</option>
 
 					<?php 
 						$servername = "localhost";
@@ -46,7 +46,7 @@
 			</div>
 			<div class="input-field col s12 m3">
 				<select name = "vestibulares[]" multiple>
-					<option value="" disabled selected>Escolha os Vestibulares</option>
+					<option value="" disabled>Escolha os Vestibulares</option>
 
 					<?php 
 						$servername = "localhost";
@@ -109,24 +109,26 @@
 							// Create connection
 							$conn = mysqli_connect($servername, $username, $password,$database);
 							mysqli_set_charset($conn,"utf8");
-						if(!empty($_REQUEST["vestibulares"]) && !empty($_REQUEST["disciplinas"])){
-							$Enunciado = $_REQUEST["termo"];
-							$vestibulares = $_REQUEST["vestibulares"];
-							$disciplinas = $_REQUEST["disciplinas"];
+						if(isset($_POST['action'])){
 							$anoComeco = $_REQUEST["ano-comeco"];
 							$anoFim = $_REQUEST["ano-fim"];
+							$Enunciado = $_REQUEST["termo"];
 
-							$vestibulares =  "(".implode(",",$vestibulares).")";
-							$disciplinas =  "(".implode(",",$disciplinas).")";
+							$sql = "SELECT Enunciado, ID_Questao, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', disciplina.ID_Disciplina 'idDisc', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID) where Enunciado like '%{$Enunciado}%' and questao.ano >= $anoComeco and questao.ano <= $anoFim";
 
-
-							$sql = "SELECT Enunciado, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID) where Enunciado like '%{$Enunciado}%' and questao.fk_Disciplina_ID_Disciplina in $disciplinas and questao.fk_Vestibular_ID in $vestibulares and questao.ano >= $anoComeco and questao.ano <= $anoFim;";
+							if(isset($_REQUEST["vestibulares"])){
+								$vestibulares =  "(".implode(",",$_REQUEST["vestibulares"]).")";
+								$sql = $sql." and questao.fk_Vestibular_ID in $vestibulares";
+							}
+							if(isset($_REQUEST["disciplinas"])){
+								$disciplinas =  "(".implode(",",$_REQUEST["disciplinas"]).")";
+								$sql = $sql." and questao.fk_Disciplina_ID_Disciplina in $disciplinas";
+							}
 							$result = $conn->query($sql);
 							if ($result and $result->num_rows > 0) {
 								while($row = $result->fetch_assoc()) {
 									echo "
-
-										<tr>
+										<tr onclick=\"window.location='/questao.php?questao={$row["idDisc"]}&clicou=0&ID={$row["ID_Questao"]}'\" >
 											<td>
 												{$row["Enunciado"]}
 											</td>
@@ -145,13 +147,13 @@
 							}
 						} else{
 
-							$sql = "SELECT Enunciado, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID);";
+							$sql = "SELECT Enunciado, ID_Questao, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', disciplina.ID_Disciplina 'idDisc', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID);";
 							$result = $conn->query($sql);
 							if ($result and $result->num_rows > 0) {
 								while($row = $result->fetch_assoc()) {
 									echo "
 
-										<tr>
+										<tr onclick=\"window.location='/questao.php?questao={$row["idDisc"]}&clicou=0&ID={$row["ID_Questao"]}'\">
 											<td>
 												{$row["Enunciado"]}
 											</td>

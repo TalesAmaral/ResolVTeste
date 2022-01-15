@@ -34,7 +34,11 @@
 		$conn = mysqli_connect($servername, $username, $password,$database);
 		mysqli_set_charset($conn,"utf8");
 		if($clicou==0){
-			$sql = "SELECT * FROM questao where fk_Disciplina_ID_Disciplina = $questao AND Aprovada=1 ORDER BY RAND () LIMIT 1";
+			if(!empty($_REQUEST['ID'])){
+				$sql = "SELECT * FROM questao where ID_Questao = {$_REQUEST['ID']} AND Aprovada=1";
+			}else{
+				$sql = "SELECT * FROM questao where fk_Disciplina_ID_Disciplina = $questao AND Aprovada=1 ORDER BY RAND () LIMIT 1";
+			}
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
