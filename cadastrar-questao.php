@@ -1,5 +1,5 @@
 <?php
-	session_start()
+	session_start();
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +89,7 @@
 					<button type="submit" class="login-center btn waves-effect waves-light">Enviar</button>
 					<?php 
 						if(isset($_SESSION['login']) && isset($_POST['enunciado']) && isset($_POST['alternativaCorreta']) && isset($_POST['disciplinas']) && is_numeric($_POST['ano'])
-						&& filter_var($_POST['ano'], FILTER_VALIDATE_INT)){ //Aqui não foi necessário a verificação de duas entradas do formulário
+						&& filter_var($_POST['ano'], FILTER_VALIDATE_INT)){ //Aqui não foi necessário verificar mais de uma entrada do formulário
 							$conn = mysqli_connect($servername, $username, $password,$database);
 							mysqli_set_charset($conn,"utf8");
 

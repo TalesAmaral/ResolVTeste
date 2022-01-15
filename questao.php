@@ -155,6 +155,7 @@
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
 					$resolucao = $row["Solucao"];
+					$_SESSION['resolucao']=$resolucao;
 				}
 			}
 			echo $resolucao."<br /><br />";
@@ -169,6 +170,28 @@
 			echo "Próxima questão";
 		}
 ?></button>
+	<?php
+	if($clicou==1 && $_SESSION['resultados']){
+		echo "<button type='submit' class='btn waves-effect waves-light' formaction='' name='Download' >Download</button>";
+	}
+	if(isset($_POST['Download'])){
+		ob_clean(); 
+		require('fpdf184/fpdf.php');
+		$pdf = new FPDF();
+		$pdf->AddPage();
+		$pdf->SetTitle(utf8_decode('Questão'));
+		$pdf->SetFont('Arial','',12);
+		$pdf->MultiCell(190,6,utf8_decode(html_entity_decode($_SESSION['enunciado'], ENT_QUOTES)));
+		$pdf->MultiCell(190,8,'a) '.utf8_decode(html_entity_decode($_SESSION['alternativas'][0], ENT_QUOTES)));
+		$pdf->MultiCell(190,8,'b) '.utf8_decode(html_entity_decode($_SESSION['alternativas'][1], ENT_QUOTES)));
+		$pdf->MultiCell(190,8,'c) '.utf8_decode(html_entity_decode($_SESSION['alternativas'][2], ENT_QUOTES)));
+		$pdf->MultiCell(190,8,'d) '.utf8_decode(html_entity_decode($_SESSION['alternativas'][3], ENT_QUOTES)));
+		$pdf->MultiCell(190,8,'e) '.utf8_decode(html_entity_decode($_SESSION['alternativas'][4], ENT_QUOTES)));
+		$pdf->MultiCell(190,10,utf8_decode('Resolução:'));
+		$pdf->MultiCell(190,8,utf8_decode(html_entity_decode($_SESSION['resolucao'], ENT_QUOTES)));
+		$pdf->Output('D','questao.pdf');
+	} 
+	?>
 		</form>
 
 
