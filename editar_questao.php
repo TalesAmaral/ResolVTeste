@@ -105,6 +105,11 @@
             $conn->query($sql);
             $conn->commit();
         }
+        $data = date('y-m-d');
+        $sql="INSERT INTO edita(fk_Usuario_ID_Usuario, fk_Questao_ID_Questao, dataEditada) VALUES({$_SESSION['idUsuarioSessao']}, $idQuestao, '$data')";
+        $conn->query($sql);
+        $conn->commit();
+
         $conn->close();
         Header("Location: buscar.php");
         die();
