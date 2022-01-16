@@ -5,6 +5,51 @@
         Header("Location: index.php");
         die();
     }
+    $servername = "localhost";
+    $username = "root";
+    $password = "usbw";
+    $database = "baseresolv";
+    if(isset($_POST['excluir'])){
+        $conn = mysqli_connect($servername, $username, $password,$database);
+		mysqli_set_charset($conn,"utf8");
+        $idQuestao=$_REQUEST['ID'];
+
+        $sql="SELECT ID_Alternativa
+        FROM alternativa INNER JOIN possui ON possui.fk_Alternativa_ID_Alternativa=ID_Alternativa INNER JOIN questao ON questao.ID_Questao=possui.fk_Questao_ID_Questao
+        WHERE questao.ID_Questao=$idQuestao";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $altApagar = array();
+            while($row = $result->fetch_assoc()) {
+                $altApagar[] = $row["ID_Alternativa"];
+            }
+        }
+        $sql="DELETE FROM possui WHERE fk_Questao_ID_Questao=$idQuestao";
+        $conn->query($sql);
+        $sql="DELETE FROM questao WHERE ID_Questao=$idQuestao";
+        $conn->query($sql);
+        foreach($altApagar as $altIdApagar){
+            $sql="DELETE FROM alternativa WHERE ID_Alternativa=$altIdApagar";
+            $conn->query($sql);
+        }
+        $conn->commit();
+        $sql="SELECT ID FROM vestibular INNER JOIN questao ON questao.fk_Vestibular_ID=ID WHERE Nome='$vest'";
+        $result = $conn->query($sql);
+        if ($result->num_rows == 0) {
+            $sql="DELETE FROM vestibular WHERE Nome='$vest'";
+            $conn->query($sql);
+        }
+        $conn->commit();
+
+        $sql='DELETE FROM realiza WHERE fk_Questao_ID_Questao IS NULL';
+        $result = $conn->query($sql);
+        $conn->commit();
+        $conn->close();
+        Header("Location: buscar.php");
+        die();
+    }
+        
+
 ?>
 
 <!DOCTYPE html>
@@ -28,11 +73,6 @@
 
 
                     <?php
-                        $servername = "localhost";
-                        $username = "root";
-                        $password = "usbw";
-                        $database = "baseresolv";
-                        
                         $conn = mysqli_connect($servername, $username, $password,$database);
 						mysqli_set_charset($conn,"utf8");
                         $sql = "SELECT * FROM questao WHERE ID_Questao={$_REQUEST['ID']}";
@@ -44,7 +84,7 @@
                             $ano = $row['Ano'];
                             $idDisciplina = $row['fk_Disciplina_ID_Disciplina'];
                             $idResposta = $row['fk_Alternativa_ID_Alternativa'];
-                            $idVest = $row['fk_Alternativa_ID_Alternativa'];
+                            $idVest = $row['fk_Vestibular_ID'];
                         }
                         $sql = "SELECT Nome FROM vestibular WHERE ID='$idVest'";
                         $result = $conn->query($sql);
@@ -61,6 +101,7 @@
                                 $valores[] = $row["Valor"];
                             }
                         }
+                        $conn->close();
                     ?>
 
 					<p class="login-center"><b>Enunciado</b></p>
@@ -92,11 +133,6 @@
 					<select name="disciplinas" class="browser-default login-center input-width" required>
 						<option value="-1" disabled>Escolha a disciplina</option>
 						<?php 
-							$servername = "localhost";
-							$username = "root";
-							$password = "usbw";
-							$database = "baseresolv";
-
 							// Create connection
 							$conn = mysqli_connect($servername, $username, $password,$database);
 							mysqli_set_charset($conn,"utf8");
@@ -108,7 +144,7 @@
 									$disciplina[] = $row["Nome"];
 								}
 							}
-
+                            $conn->close();
 							$i = 1;
 						?>
 						<?php foreach ($disciplina as $nomeDisc) : ?>
@@ -125,11 +161,14 @@
 					<input type="text" class="login-center input-width" name="ano" value="<?php echo $ano;?>" required>
 					<br /><br />
 
-					<button type="submit" class="login-center btn waves-effect waves-light">Editar</button>
-                    <button type="submit" class="btn waves-effect waves-light red">Excluir</button>
+					<button type="submit" class="login-center btn waves-effect waves-light" name="editar" >Editar</button>
+                    <button type="submit" class="btn waves-effect waves-light red" name="excluir" >Excluir</button>
                 </form>
             </section>
         </section>
+
+
+
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="js/materialize.js"></script>
 	<script src="js/init.js"></script>
