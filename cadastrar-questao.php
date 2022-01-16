@@ -26,12 +26,12 @@
 				<br />
 				<form method="POST" action="">
 					<p class="login-center"><b>Enunciado</b></p>
-					<textarea class="login-center input-width materialize-textarea" name="enunciado" required></textarea>
-					
+					<textarea class="login-center input-width materialize-textarea" name="enunciado" maxlength="2000" required></textarea>
+
 					<p class="login-center"><b>Alternativas</b></p>
 					<?php
                     for($i=1; $i<= 5; $i++){
-                        echo "<input type='text' class='login-center input-width' name='alternativa$i' placeholder='Alternativa $i' required>
+                        echo "<textarea type='text' class='login-center input-width materialize-textarea' name='alternativa$i' placeholder='Alternativa $i' maxlength='200' required></textarea>
 						<br /> <br />";
                     }
                     ?>
@@ -74,10 +74,10 @@
 					</select>
 					<br />
 					<p class="login-center"><b>Resolução</b></p>
-					<textarea class="login-center input-width materialize-textarea" name="resolucao" required></textarea>
+					<textarea class="login-center input-width materialize-textarea" id="textarea1" name="resolucao" maxlength="2000" required></textarea>
 					<br /><br />
 					<p class="login-center"><b>Vestibular</b></p>
-					<input type="text" class="login-center input-width" name="vestibular" required>
+					<input type="text" class="login-center input-width" name="vestibular" maxlength="40" required>
 					<p class="login-center"><b>Ano de criação</b></p>
 					<input type="text" class="login-center input-width" name="ano" required>
 					<br /><br />

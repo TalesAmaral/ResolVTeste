@@ -65,54 +65,58 @@
 		mysqli_set_charset($conn,"utf8");
         $idQuestao=$_REQUEST['ID'];
 
-        $sql = "SELECT ID FROM vestibular WHERE Nome='$vestibular'";
+        $sql = "SELECT * FROM questao WHERE Enunciado='$enunciado'";
 		$result = $conn->query($sql);
-		if ($result->num_rows > 0) {
-			$idVest = $result->fetch_assoc()['ID'];
-		}else{
-			$sql = "SELECT ID FROM vestibular ORDER BY ID DESC LIMIT 1";
-			$result = $conn->query($sql);
-			if ($result->num_rows > 0) {
-				$sql = "SELECT ID FROM vestibular ORDER BY ID DESC LIMIT 1";
-				$result = $conn->query($sql);
-				$idVest = $result->fetch_assoc()['ID']+1;
-				$sql = "INSERT INTO vestibular(ID, Nome) VALUES ($idVest, '$vestibular')";
-				$conn->query($sql);
-				$conn->commit();
-			}else{
-			    $sql = "INSERT INTO vestibular(ID, Nome) VALUES (1, '$vestibular')";
-				$idVest=1;
-				$conn->query($sql);
-				$conn->commit();
-			}
-        }
+		if ($result->num_rows == 0){		
+            $sql = "SELECT ID FROM vestibular WHERE Nome='$vestibular'";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                $idVest = $result->fetch_assoc()['ID'];
+            }else{
+                $sql = "SELECT ID FROM vestibular ORDER BY ID DESC LIMIT 1";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    $sql = "SELECT ID FROM vestibular ORDER BY ID DESC LIMIT 1";
+                    $result = $conn->query($sql);
+                    $idVest = $result->fetch_assoc()['ID']+1;
+                    $sql = "INSERT INTO vestibular(ID, Nome) VALUES ($idVest, '$vestibular')";
+                    $conn->query($sql);
+                    $conn->commit();
+                }else{
+                    $sql = "INSERT INTO vestibular(ID, Nome) VALUES (1, '$vestibular')";
+                    $idVest=1;
+                    $conn->query($sql);
+                    $conn->commit();
+                }
+            }
 
-        $sql="UPDATE questao SET Enunciado='$enunciado', fk_Disciplina_ID_Disciplina=$disciplina, Ano=$ano, Solucao='$resolucao', fk_Vestibular_ID=$idVest, fk_Alternativa_ID_Alternativa=$idResp WHERE ID_Questao=$idQuestao";
-        $conn->query($sql);
-        $conn->commit();
-
-        $sql="SELECT ID FROM vestibular INNER JOIN questao ON questao.fk_Vestibular_ID=ID WHERE Nome='{$_SESSION['vestAntigo']}'";
-        $result = $conn->query($sql);
-        if ($result->num_rows == 0) {
-            $sql="DELETE FROM vestibular WHERE Nome='{$_SESSION['vestAntigo']}'";
-            $conn->query($sql);
-        }
-
-
-        for($i=1;$i<=5;$i++){
-            $idAlternativa=($idQuestao-1)*5+$i;
-            $sql="UPDATE alternativa SET Valor='{$alternativas[$i-1]}' WHERE ID_Alternativa=$idAlternativa";
+            $sql="UPDATE questao SET Enunciado='$enunciado', fk_Disciplina_ID_Disciplina=$disciplina, Ano=$ano, Solucao='$resolucao', fk_Vestibular_ID=$idVest, fk_Alternativa_ID_Alternativa=$idResp WHERE ID_Questao=$idQuestao";
             $conn->query($sql);
             $conn->commit();
-        }
-        $data = date('y-m-d');
-        $sql="INSERT INTO edita(fk_Usuario_ID_Usuario, fk_Questao_ID_Questao, dataEditada) VALUES({$_SESSION['idUsuarioSessao']}, $idQuestao, '$data')";
-        $conn->query($sql);
-        $conn->commit();
 
-        $conn->close();
-        Header("Location: buscar.php");
-        die();
+            $sql="SELECT ID FROM vestibular INNER JOIN questao ON questao.fk_Vestibular_ID=ID WHERE Nome='{$_SESSION['vestAntigo']}'";
+            $result = $conn->query($sql);
+            if ($result->num_rows == 0) {
+                $sql="DELETE FROM vestibular WHERE Nome='{$_SESSION['vestAntigo']}'";
+                $conn->query($sql);
+            }
+
+
+            for($i=1;$i<=5;$i++){
+                $idAlternativa=($idQuestao-1)*5+$i;
+                $sql="UPDATE alternativa SET Valor='{$alternativas[$i-1]}' WHERE ID_Alternativa=$idAlternativa";
+                $conn->query($sql);
+                $conn->commit();
+            }
+            $data = date('y-m-d');
+            $sql="INSERT INTO edita(fk_Usuario_ID_Usuario, fk_Questao_ID_Questao, dataEditada) VALUES({$_SESSION['idUsuarioSessao']}, $idQuestao, '$data')";
+            $conn->query($sql);
+            $conn->commit();
+
+            $conn->close();
+            Header("Location: buscar.php");
+            die();
+        }
     }
         
 
@@ -172,12 +176,12 @@
                     ?>
 
 					<p class="login-center"><b>Enunciado</b></p>
-					<textarea class="login-center input-width materialize-textarea" name="enunciado" required><?php echo $enunciado; ?></textarea>
+					<textarea class="login-center input-width materialize-textarea" name="enunciado" maxlength='2000' required><?php echo $enunciado; ?></textarea>
 
 					<p class="login-center"><b>Alternativas</b></p>
                     <?php
                     for($i=1; $i<= 5; $i++){
-                        echo "<input type='text' class='login-center input-width' name='alternativa$i' placeholder='Alternativa $i' value='{$valores[$i-1]}' required>
+                        echo "<textarea type='text' class='login-center input-width materialize-textarea' name='alternativa$i' placeholder='Alternativa $i' maxlength='200' required>{$valores[$i-1]}</textarea>
                         <br /> <br />";
                     }
                     ?>
@@ -220,16 +224,29 @@
 					</select>
 					<br />
 					<p class="login-center"><b>Resolução</b></p>
-					<textarea class="login-center input-width materialize-textarea" name="resolucao" required><?php echo $resolucao; ?></textarea>
+					<textarea class="login-center input-width materialize-textarea" name="resolucao" required maxlength='2000'><?php echo $resolucao; ?></textarea>
 					<br /><br />
 					<p class="login-center"><b>Vestibular</b></p>
-					<input type="text" class="login-center input-width" name="vestibular" value="<?php echo $vest ?>" required>
+					<input type="text" class="login-center input-width" name="vestibular" value="<?php echo $vest ?>" maxlength='40' required>
 					<p class="login-center"><b>Ano de criação</b></p>
 					<input type="text" class="login-center input-width" name="ano" value="<?php echo $ano;?>" required>
 					<br /><br />
 
 					<button type="submit" class="login-center btn waves-effect waves-light" name="editar" >Editar</button>
                     <button type="submit" class="btn waves-effect waves-light red" name="excluir" >Excluir</button>
+                    <?php
+                    $conn = mysqli_connect($servername, $username, $password,$database);
+                    mysqli_set_charset($conn,"utf8");
+                    if(isset($_POST['editar'])){
+                        $idQuestao=$_REQUEST['ID'];
+                        $sql = "SELECT * FROM questao WHERE Enunciado='$enunciado'";
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0){
+                            echo "<span><label>A questão já existe.</label></span>";
+                        }
+                    }
+                    $conn->close();
+                    ?>
                 </form>
             </section>
         </section>
