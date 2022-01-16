@@ -33,6 +33,7 @@
             $conn->query($sql);
         }
         $conn->commit();
+        $vest = $_POST['vestibular'];
         $sql="SELECT ID FROM vestibular INNER JOIN questao ON questao.fk_Vestibular_ID=ID WHERE Nome='$vest'";
         $result = $conn->query($sql);
         if ($result->num_rows == 0) {
@@ -44,6 +45,66 @@
         $sql='DELETE FROM realiza WHERE fk_Questao_ID_Questao IS NULL';
         $result = $conn->query($sql);
         $conn->commit();
+        $conn->close();
+        Header("Location: buscar.php");
+        die();
+    }else if(isset($_POST['editar'])){
+        $enunciado = filter_var($_POST['enunciado'], FILTER_SANITIZE_STRING);
+
+        $alternativas = array();
+        for($i=1;$i<=5;$i++){
+            $alternativas[]=filter_var($_POST["alternativa".$i], FILTER_SANITIZE_STRING);
+        }
+		$disciplina=$_POST['disciplinas'];
+		$ano = filter_var($_POST['ano'], FILTER_SANITIZE_NUMBER_INT);
+		$vestibular=filter_var($_POST['vestibular'], FILTER_SANITIZE_STRING);
+		$resolucao = filter_var($_POST['resolucao'], FILTER_SANITIZE_STRING);
+        $idResp=($_REQUEST['ID']-1)*5+$_POST['alternativaCorreta'];
+
+        $conn = mysqli_connect($servername, $username, $password,$database);
+		mysqli_set_charset($conn,"utf8");
+        $idQuestao=$_REQUEST['ID'];
+
+        $sql = "SELECT ID FROM vestibular WHERE Nome='$vestibular'";
+		$result = $conn->query($sql);
+		if ($result->num_rows > 0) {
+			$idVest = $result->fetch_assoc()['ID'];
+		}else{
+			$sql = "SELECT ID FROM vestibular ORDER BY ID DESC LIMIT 1";
+			$result = $conn->query($sql);
+			if ($result->num_rows > 0) {
+				$sql = "SELECT ID FROM vestibular ORDER BY ID DESC LIMIT 1";
+				$result = $conn->query($sql);
+				$idVest = $result->fetch_assoc()['ID']+1;
+				$sql = "INSERT INTO vestibular(ID, Nome) VALUES ($idVest, '$vestibular')";
+				$conn->query($sql);
+				$conn->commit();
+			}else{
+			    $sql = "INSERT INTO vestibular(ID, Nome) VALUES (1, '$vestibular')";
+				$idVest=1;
+				$conn->query($sql);
+				$conn->commit();
+			}
+        }
+
+        $sql="UPDATE questao SET Enunciado='$enunciado', fk_Disciplina_ID_Disciplina=$disciplina, Ano=$ano, Solucao='$resolucao', fk_Vestibular_ID=$idVest, fk_Alternativa_ID_Alternativa=$idResp WHERE ID_Questao=$idQuestao";
+        $conn->query($sql);
+        $conn->commit();
+
+        $sql="SELECT ID FROM vestibular INNER JOIN questao ON questao.fk_Vestibular_ID=ID WHERE Nome='{$_SESSION['vestAntigo']}'";
+        $result = $conn->query($sql);
+        if ($result->num_rows == 0) {
+            $sql="DELETE FROM vestibular WHERE Nome='{$_SESSION['vestAntigo']}'";
+            $conn->query($sql);
+        }
+
+
+        for($i=1;$i<=5;$i++){
+            $idAlternativa=($idQuestao-1)*5+$i;
+            $sql="UPDATE alternativa SET Valor='{$alternativas[$i-1]}' WHERE ID_Alternativa=$idAlternativa";
+            $conn->query($sql);
+            $conn->commit();
+        }
         $conn->close();
         Header("Location: buscar.php");
         die();
@@ -89,6 +150,7 @@
                         $sql = "SELECT Nome FROM vestibular WHERE ID='$idVest'";
                         $result = $conn->query($sql);
                         $vest=$result->fetch_assoc()['Nome'];
+                        $_SESSION['vestAntigo']=$vest;
 
                         $sql = "SELECT Valor FROM alternativa 
                         INNER JOIN possui ON alternativa.ID_Alternativa = possui.fk_Alternativa_ID_Alternativa INNER JOIN questao ON questao.ID_Questao = possui.fk_Questao_ID_Questao
