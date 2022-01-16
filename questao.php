@@ -129,7 +129,11 @@
 			if($clicou==1 && isset($_POST['alternativas'])){
 				if($valor==$resposta){
 					echo "<p class='acertou'>";
+					if(filter_var($_POST['alternativas'], FILTER_SANITIZE_STRING)==$valor){
+						$acertou=1;
+					}
 				}else if(filter_var($_POST['alternativas'], FILTER_SANITIZE_STRING)==$valor && $valor!=$resposta){
+					$acertou=0;
 					echo "<p class='errou'>";
 				}
 			}
@@ -170,7 +174,7 @@
 	<button type="submit" class="btn waves-effect waves-light"><?php 
 		if($clicou==0 && $_SESSION['resultados']){
 			echo "Enviar";
-		}else{
+		}else if($clicou==1){
 			echo "Próxima questão";
 		}
 ?></button>
@@ -201,6 +205,18 @@
 
 	    </section>
 	</section>
+
+	<?php
+	if($_SESSION['resultados'] && $clicou==1 && isset($acertou) && isset($_SESSION['login'])){
+		$conn = mysqli_connect($servername, $username, $password,$database);
+		$data = date('y-m-d');
+		$sql="INSERT INTO realiza(fk_Usuario_ID_Usuario, fk_Questao_ID_Questao, Acertou, dataRealizada) VALUES ({$_SESSION["idUsuarioSessao"]}, {$_SESSION["idQuestao"]}, $acertou, '$data')";
+		$conn->query($sql);
+		$conn->commit();
+		$conn->close();
+	}
+	?>
+
       <!--JavaScript at end of body for optimized loading-->
       <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
