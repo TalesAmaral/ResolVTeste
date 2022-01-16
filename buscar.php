@@ -94,10 +94,17 @@
 
 		<table>
 			<thead>
+				<th></th>
 				<th> Enunciado </th> 
 				<th> Disciplina </th>
 				<th>Vestibular</th>
 				<th>Ano</th>
+				<?php
+					$admin = array(1,2);
+					if(isset($_SESSION['login']) && in_array($_SESSION['idUsuarioSessao'], $admin)){
+						echo "<th>Editar</th>";
+					}
+				?>
 			</thead>
 			<tbody>
 				<?php
@@ -114,7 +121,7 @@
 							$anoFim = $_REQUEST["ano-fim"];
 							$Enunciado = $_REQUEST["termo"];
 
-							$sql = "SELECT Enunciado, ID_Questao, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', disciplina.ID_Disciplina 'idDisc', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID) where Enunciado like '%{$Enunciado}%' and questao.ano >= $anoComeco and questao.ano <= $anoFim";
+							$sql = "SELECT Enunciado, ID_Questao, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', disciplina.ID_Disciplina 'idDisc', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID) where Enunciado like '%{$Enunciado}%' and questao.ano >= $anoComeco and questao.ano <= $anoFim and Aprovada = 1";
 
 							if(isset($_REQUEST["vestibulares"])){
 								$vestibulares =  "(".implode(",",$_REQUEST["vestibulares"]).")";
@@ -128,7 +135,8 @@
 							if ($result and $result->num_rows > 0) {
 								while($row = $result->fetch_assoc()) {
 									echo "
-										<tr onclick=\"window.location='/questao.php?questao={$row["idDisc"]}&clicou=0&ID={$row["ID_Questao"]}'\" >
+										<tr>
+											<td> <button type='button' class='btn-floating waves-effect waves-light red' onclick=\"window.location='/questao.php?questao={$row["idDisc"]}&clicou=0&ID={$row["ID_Questao"]}'\"><i class='material-icons'>navigate_next</i></button>
 											<td>
 												{$row["Enunciado"]}
 											</td>
@@ -141,19 +149,22 @@
 											<td>
 												{$row["Ano"]}
 											</td>
-										</tr>
-									   ";
+											";
+									if(isset($_SESSION['login']) && in_array($_SESSION['idUsuarioSessao'], $admin)){
+										echo "<td><button type='button' class='btn-floating waves-effect waves-light red' onclick=\"window.location='/editar_questao.php?ID={$row["ID_Questao"]}'\"><i class='material-icons'>edit</i></button></td>";
+									}
+									echo "</tr>";
 								}
 							}
 						} else{
 
-							$sql = "SELECT Enunciado, ID_Questao, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', disciplina.ID_Disciplina 'idDisc', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID);";
+							$sql = "SELECT Enunciado, ID_Questao, vestibular.nome 'Vestibular', disciplina.nome 'disciplina', disciplina.ID_Disciplina 'idDisc', Ano from questao inner join disciplina on (questao.fk_Disciplina_ID_Disciplina = disciplina.ID_Disciplina) inner join vestibular on (questao.fk_Vestibular_ID = vestibular.ID) where aprovada=1;";
 							$result = $conn->query($sql);
 							if ($result and $result->num_rows > 0) {
 								while($row = $result->fetch_assoc()) {
 									echo "
-
-										<tr onclick=\"window.location='/questao.php?questao={$row["idDisc"]}&clicou=0&ID={$row["ID_Questao"]}'\">
+										<tr>
+											<td> <button type='button' class='btn-floating waves-effect waves-light red' onclick=\"window.location='/questao.php?questao={$row["idDisc"]}&clicou=0&ID={$row["ID_Questao"]}'\"><i class='material-icons'>navigate_next</i></button>
 											<td>
 												{$row["Enunciado"]}
 											</td>
@@ -166,8 +177,11 @@
 											<td>
 												{$row["Ano"]}
 											</td>
-										</tr>
-									   ";
+											";
+									if(isset($_SESSION['login']) && in_array($_SESSION['idUsuarioSessao'], $admin)){
+										echo "<td><button type='button' class='btn-floating waves-effect waves-light red' onclick=\"window.location='/editar_questao.php?ID={$row["ID_Questao"]}'\"><i class='material-icons'>edit</i></button></td>";
+									}
+									echo "</tr>";
 								}
 							}
 						}

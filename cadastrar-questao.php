@@ -27,26 +27,22 @@
 				<form method="POST" action="">
 					<p class="login-center"><b>Enunciado</b></p>
 					<textarea class="login-center input-width materialize-textarea" name="enunciado" required></textarea>
-
+					
 					<p class="login-center"><b>Alternativas</b></p>
-					<input type="text" class="login-center input-width" name="alternativa1" placeholder="Alternativa 1" required>
-					<br /><br />
-					<input type="text" class="login-center input-width" name="alternativa2" placeholder="Alternativa 2" required>
-					<br /><br />
-					<input type="text" class="login-center input-width" name="alternativa3" placeholder="Alternativa 3" required>
-					<br /><br />
-					<input type="text" class="login-center input-width" name="alternativa4" placeholder="Alternativa 4" required>
-					<br /><br />
-					<input type="text" class="login-center input-width" name="alternativa5" placeholder="Alternativa 5" required>
-
+					<?php
+                    for($i=1; $i<= 5; $i++){
+                        echo "<input type='text' class='login-center input-width' name='alternativa$i' placeholder='Alternativa $i' required>
+						<br /> <br />";
+                    }
+                    ?>
 					<p class="login-center"><b>Resposta</b></p>
 					<select class="browser-default login-center input-width" name="alternativaCorreta" required>
 						<option value="-1" disabled selected>Escolha a alternativa correta</option>
-						<option value="1">Alternativa 1</option>
-						<option value="2">Alternativa 2</option>
-						<option value="3">Alternativa 3</option>
-						<option value="4">Alternativa 4</option>
-						<option value="5">Alternativa 5</option>
+						<?php 
+                        for ($i = 1; $i <= 5; $i++) {
+                           echo "<option value='$i'>Alternativa $i</option>";
+                        }
+                        ?>
 					</select>
 					<br /> 
 					<p class="login-center"><b>Disciplina</b></p>
