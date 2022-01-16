@@ -45,6 +45,10 @@
         $sql='DELETE FROM realiza WHERE fk_Questao_ID_Questao IS NULL';
         $result = $conn->query($sql);
         $conn->commit();
+
+        $sql='DELETE FROM edita WHERE fk_Questao_ID_Questao IS NULL';
+        $result = $conn->query($sql);
+        $conn->commit();
         $conn->close();
         Header("Location: buscar.php");
         die();
