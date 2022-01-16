@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 22-Dez-2021 às 23:56
+-- Tempo de geração: 16-Jan-2022 às 17:14
 -- Versão do servidor: 5.6.51
 -- versão do PHP: 8.0.7
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `alternativa` (
   `ID_Alternativa` int(11) NOT NULL,
-  `Valor` varchar(45) DEFAULT NULL
+  `Valor` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -108,8 +108,8 @@ INSERT INTO `possui` (`fk_Alternativa_ID_Alternativa`, `fk_Questao_ID_Questao`) 
 
 CREATE TABLE `questao` (
   `ID_Questao` int(11) NOT NULL,
-  `Enunciado` varchar(200) DEFAULT NULL,
-  `Solucao` varchar(200) DEFAULT NULL,
+  `Enunciado` varchar(2000) DEFAULT NULL,
+  `Solucao` varchar(2000) DEFAULT NULL,
   `Ano` int(11) DEFAULT NULL,
   `Aprovada` tinyint(4) DEFAULT NULL,
   `fk_Disciplina_ID_Disciplina` int(11) DEFAULT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE `questao` (
 --
 
 INSERT INTO `questao` (`ID_Questao`, `Enunciado`, `Solucao`, `Ano`, `Aprovada`, `fk_Disciplina_ID_Disciplina`, `fk_Usuario_ID_Usuario`, `dataCriada`, `fk_Alternativa_ID_Alternativa`, `fk_Vestibular_ID`) VALUES
-(1, 'Duas caixas A e B, contêm exatamente 5 bolas cada uma. Retiram-se duas bolas de cada caixa, aleatoriamente. O número de elementos do espaço amostral relativo a esse experimento é exatamente:', 'O número de formas de escolher as 2 bolas em uma caixa será C 5,2. \n\nComo temos duas caixas, o total de possibilidades de escolha será:\n\nC 5,2 . C 5,2 = 10 . 10 = 100', 1994, 1, 1, 1, '2021-12-22', 1, 1);
+(1, 'Duas caixas A e B, contêm exatamente 5 bolas cada uma. Retiram-se duas bolas de cada caixa, aleatoriamente. O número de elementos do espaço amostral relativo a esse experimento é exatamente:', 'O número de formas de escolher as 2 bolas em uma caixa será C 5,2. \n\nComo temos duas caixas, o total de possibilidades de escolha será:\n\nC 5,2 . C 5,2 = 10 . 10 = 100', 1994, 1, 1, NULL, '2021-12-22', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -158,9 +158,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`Nome`, `Email`, `Apelido`, `Senha`, `ID_Usuario`) VALUES
-('Lucas DAmato Nitz', 'lucas.nitz@hotmail.com', 'lucdnitz', 'lucas123', 1),
-('Tales', 'talesamaral@gmail.com', 'totody', 'tales123', 2),
-('lucas', 'lucas', 'lucas', 'lucas', 3);
+('Tales', 'talesamaral@gmail.com', 'totody', '$2y$10$yYTxf7/vzKnPunLMMUT9BugUzAGGnBlTmdOsjuQd30e2VhfiIpfOm', 1),
+('Lucas D&#39;Amato Nitz', 'lucas.nitz@hotmail.com', 'lucdnitz', '$2y$10$IVS0P6anWmnxQ8l85Do/vObu84V8BKn3BmGgDg7oS0qmVIupksMde', 2);
 
 -- --------------------------------------------------------
 
