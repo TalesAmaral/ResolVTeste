@@ -65,7 +65,7 @@
 		mysqli_set_charset($conn,"utf8");
         $idQuestao=$_REQUEST['ID'];
 
-        $sql = "SELECT * FROM questao WHERE Enunciado='$enunciado'";
+        $sql = "SELECT * FROM questao WHERE Enunciado='$enunciado' AND NOT(Enunciado='{$_SESSION['enunciadoAntigo']}')";
 		$result = $conn->query($sql);
 		if ($result->num_rows == 0){		
             $sql = "SELECT ID FROM vestibular WHERE Nome='$vestibular'";
@@ -160,6 +160,7 @@
                         $result = $conn->query($sql);
                         $vest=$result->fetch_assoc()['Nome'];
                         $_SESSION['vestAntigo']=$vest;
+                        $_SESSION['enunciadoAntigo']=$enunciado;
 
                         $sql = "SELECT Valor FROM alternativa 
                         INNER JOIN possui ON alternativa.ID_Alternativa = possui.fk_Alternativa_ID_Alternativa INNER JOIN questao ON questao.ID_Questao = possui.fk_Questao_ID_Questao
