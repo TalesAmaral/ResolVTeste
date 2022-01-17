@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 16-Jan-2022 às 17:14
+-- Tempo de geração: 17-Jan-2022 às 16:03
 -- Versão do servidor: 5.6.51
 -- versão do PHP: 8.0.7
 
@@ -41,7 +41,32 @@ INSERT INTO `alternativa` (`ID_Alternativa`, `Valor`) VALUES
 (2, '120'),
 (3, '50'),
 (4, '25'),
-(5, '240');
+(5, '240'),
+(6, 'bactérias patogênicas se multiplicam de maneira acelerada.'),
+(7, 'antibióticos são utilizados pela população de maneira indiscriminada.'),
+(8, 'bactérias possuem plasmídeos que contêm genes relacionados à virulência.'),
+(9, 'bactérias podem ser transmitidas para um indivíduo utilizando várias estratégias.'),
+(10, 'serviços de saúde precários constituem importantes focos de bactérias patogênicas.'),
+(11, 'o existencialismo sartriano.'),
+(12, 'o ceticismo iluminista.'),
+(13, 'o materialismo histórico.'),
+(14, 'a dialética positivista.'),
+(15, 'a escolástica medieval.'),
+(16, 'O composto I é um alceno.'),
+(17, 'O composto I apresenta 2 átomos de carbono secundário.'),
+(18, 'O composto II tem maior ponto de ebulição que o composto III.'),
+(19, 'O composto III apresenta 12 átomos de hidrogênio.'),
+(20, 'O composto IV é um hidrocarboneto.'),
+(21, 'os que indicam às normas do uso linguístico correto.'),
+(22, 'os autores que descrevem a estrutura da língua.'),
+(23, 'os que escrevem livros, ensaios e os publicam em algum suporte.'),
+(24, 'os usuários que aproveitam o dom de poder falar, ler ou escrever textos nesta língua.'),
+(25, 'são os que defendem a norma padrão aceita pelos usuários mais escolarizados.'),
+(26, '6,8 °C.'),
+(27, '59,6 °C.'),
+(28, '0 °C.'),
+(29, '66,8 °C.'),
+(30, '19,6 °C.');
 
 -- --------------------------------------------------------
 
@@ -98,7 +123,32 @@ INSERT INTO `possui` (`fk_Alternativa_ID_Alternativa`, `fk_Questao_ID_Questao`) 
 (2, 1),
 (3, 1),
 (4, 1),
-(5, 1);
+(5, 1),
+(6, 2),
+(7, 2),
+(8, 2),
+(9, 2),
+(10, 2),
+(11, 3),
+(12, 3),
+(13, 3),
+(14, 3),
+(15, 3),
+(16, 4),
+(17, 4),
+(18, 4),
+(19, 4),
+(20, 4),
+(21, 5),
+(22, 5),
+(23, 5),
+(24, 5),
+(25, 5),
+(26, 6),
+(27, 6),
+(28, 6),
+(29, 6),
+(30, 6);
 
 -- --------------------------------------------------------
 
@@ -124,7 +174,12 @@ CREATE TABLE `questao` (
 --
 
 INSERT INTO `questao` (`ID_Questao`, `Enunciado`, `Solucao`, `Ano`, `Aprovada`, `fk_Disciplina_ID_Disciplina`, `fk_Usuario_ID_Usuario`, `dataCriada`, `fk_Alternativa_ID_Alternativa`, `fk_Vestibular_ID`) VALUES
-(1, 'Duas caixas A e B, contêm exatamente 5 bolas cada uma. Retiram-se duas bolas de cada caixa, aleatoriamente. O número de elementos do espaço amostral relativo a esse experimento é exatamente:', 'O número de formas de escolher as 2 bolas em uma caixa será C 5,2. \n\nComo temos duas caixas, o total de possibilidades de escolha será:\n\nC 5,2 . C 5,2 = 10 . 10 = 100', 1994, 1, 1, NULL, '2021-12-22', 1, 1);
+(1, 'Duas caixas A e B, contêm exatamente 5 bolas cada uma. Retiram-se duas bolas de cada caixa, aleatoriamente. O número de elementos do espaço amostral relativo a esse experimento é exatamente:', 'O número de formas de escolher as 2 bolas em uma caixa será C 5,2. \n\nComo temos duas caixas, o total de possibilidades de escolha será:\n\nC 5,2 . C 5,2 = 10 . 10 = 100', 1994, 1, 1, NULL, '2021-12-22', 1, 1),
+(2, 'Nas últimas décadas vários países, inclusive o Brasil, têm testemunhado uma grande proliferação de bactérias patogênicas, envolvidas em uma variedade de doenças e que apresentam resistência a múltiplos antibióticos. Atualmente têm se destacado as superbactérias que acumularam vários genes determinantes de resistência, a ponto de se tornarem resistentes a praticamente todos os antimicrobianos.', 'A população tem intensificado o uso de antibióticos, por vezes que nem são recomendados, nos últimos anos, e isso tem levado a uma seleção de bactérias mais resistentes conhecidas como superbactérias. Essa resistência ocorre a partir do momento em que o medicamento elimina somente alguns dos organismos infecciosos, enquanto as mais resistentes sobrevivem e transmitem sua capacidade às suas descendências.', 2021, 1, 5, 1, '2022-01-17', 7, 2),
+(3, 'Se a tragédia havia absorvido e assimilado todas as formas de arte antecedentes, o mesmo se pode dizer do diálogo platônico. Mistura de todos os estilos e de todas as formas precedentes, o diálogo oscila entre a narrativa, o lirismo e o drama, entre a prosa e a poesia. Platão conseguiu realmente legar à posteridade o modelo de uma obra de arte nova, o do “romance”. Neste gênero literário, a poesia existe gradualmente subordinada à filosofia e durante muitos séculos, mais tarde, a mesma filosofia esteve subordinada à teologia.\r\n(Friedrich Wilhelm Nietzsche. A origem da tragédia, 2004. Adaptado.)\r\n\r\nPode-se exemplificar o argumento sobre a submissão da filosofia à teologia, com', 'Filosofia medieval esteve muito ligada a igreja católica. A igreja católica como um todo teve muita importância na época medieval.', 2018, 1, 6, 1, '2022-01-17', 15, 3),
+(4, 'Considere os compostos orgânicos a seguir.\r\n\r\nI. 2-metil-pentano. II. Propano. III. Butano. IV. Cloroetano.\r\n\r\nSobre esses compostos, assinale a alternativa correta.', 'A alternativa B é a única correta', 2015, 1, 4, 1, '2022-01-17', 17, 4),
+(5, 'Millôr, exercitando sua competência de linguista por intuição, escreveu a declaração abaixo:\r\n \r\n&#34;Nenhuma língua morreu por falta de gramáticos: algumas estagnaram por ausência de escritores. Nenhuma sobreviveu sem povo.”\r\n \r\nPor essa declaração, fica obviamente declarado que, na constituição e na manutenção de uma língua, o essencial são:', 'A palavra &#34;dom&#34; está no sentido de &#34;aptidão&#34; ou &#34;domínio&#34;, então nesse caso seria que pessoas nas quais tenham a aptidão de utilizar a língua, passam a língua adiante e dessa ela não morrerá.', 2021, 1, 3, 1, '2022-01-17', 24, 5),
+(6, 'Uma escala termométrica R foi criada para uso em laboratório. Nela, o valor de 0 °R equivale à temperatura de –20 °C e o valor de 100 °R equivale à temperatura de 40 °C.\r\nNessa escala, a temperatura de 66 °R, corresponde à temperatura de', 'R / 100 = (C + 20) / 60 => R = 66 => C = 19,6 ', 2018, 1, 2, 1, '2022-01-17', 30, 3);
 
 -- --------------------------------------------------------
 
@@ -149,7 +204,7 @@ CREATE TABLE `usuario` (
   `Nome` varchar(45) DEFAULT NULL,
   `Email` varchar(45) DEFAULT NULL,
   `Apelido` varchar(45) DEFAULT NULL,
-  `Senha` varchar(200) DEFAULT NULL,
+  `Senha` varchar(256) DEFAULT NULL,
   `ID_Usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -158,8 +213,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`Nome`, `Email`, `Apelido`, `Senha`, `ID_Usuario`) VALUES
-('Tales', 'talesamaral@gmail.com', 'totody', '$2y$10$yYTxf7/vzKnPunLMMUT9BugUzAGGnBlTmdOsjuQd30e2VhfiIpfOm', 1),
-('Lucas D&#39;Amato Nitz', 'lucas.nitz@hotmail.com', 'lucdnitz', '$2y$10$IVS0P6anWmnxQ8l85Do/vObu84V8BKn3BmGgDg7oS0qmVIupksMde', 2);
+('Admin', 'admin@resolv.com', 'ADMIN1', '$2y$10$3Xe.5nmqajyCFW.J7U7HWeF5H12GRvxWFfRYl3wkRqMJB9pRzyYyy', 1),
+('Admin', 'admin2@resolv.com', 'ADMIN2', '$2y$10$lv5XdHXCBQUQTOyxwPdC/urwYE9QNYOPgtg1CuLk9Ol2j77u2EIl6', 2);
 
 -- --------------------------------------------------------
 
@@ -177,7 +232,11 @@ CREATE TABLE `vestibular` (
 --
 
 INSERT INTO `vestibular` (`ID`, `Nome`) VALUES
-(1, 'AFA');
+(1, 'AFA'),
+(2, 'ENEM'),
+(3, 'VUNESP'),
+(4, 'UNICENTRO'),
+(5, 'CESMAC');
 
 --
 -- Índices para tabelas despejadas
