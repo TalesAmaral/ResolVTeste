@@ -72,12 +72,12 @@
 			</div>
 			<div class="input-field col s6 m2">
 				<label for="ano-comeco"> Escolha o ano inicial:</label>	
-				<input name="ano-comeco" type="number" min="1900" max="2099" step="1" value="1990" />
+				<input name="ano-comeco" type="number" min="1900" max="2022" step="1" value="1900" />
 			</div>
 
 			<div class="input-field col s6 m2">
 				<label for="ano-fim"> Escolha o ano final:</label>	
-				<input name="ano-fim" type="number" min="1900" max="2099" step="1" value="2016" />
+				<input name="ano-fim" type="number" min="1900" max="2022" step="1" value="2022" />
 			</div>
 			<div class="input-field col s12 m2">
 
