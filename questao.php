@@ -81,7 +81,7 @@
 	    <section class="section_content">
 	    <p><b><?php 
 		if($_SESSION['resultados']==True){ #Verifica se foi encontrado alguma questão
-			echo "(".$_SESSION['vest']." - ".$_SESSION['ano'].") ".$_SESSION['enunciado'];
+			echo "(".$_SESSION['vest']." - ".$_SESSION['ano'].") ".nl2br($_SESSION['enunciado']);
 		}else{
 			echo "Não foi possível achar nenhuma questão.";
 		}
